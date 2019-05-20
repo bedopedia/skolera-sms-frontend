@@ -1,0 +1,12 @@
+@import 'initializer';
+
+.student-info-box {
+    img {
+        width: 110px;
+        height: 110px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 1px solid $border;
+        padding: 5px;
+    }
+}
