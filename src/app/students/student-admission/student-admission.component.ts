@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StudentAdmissionComponent implements OnInit {
 
-    currentStep = 1;
+    currentStep = 4;
     constructor() { }
 
     ngOnInit() {

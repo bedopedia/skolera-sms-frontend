@@ -7,7 +7,7 @@ import {MatTableModule} from '@angular/material/table';
 import {NgSelectModule} from '@ng-select/ng-select';
 import { ImageUploadComponent } from './image-upload/image-upload.component';
 import { RouterModule } from '@angular/router';
-
+import { CdkTableModule} from '@angular/cdk/table';
 
 @NgModule({
     declarations: [
@@ -30,7 +30,8 @@ import { RouterModule } from '@angular/router';
         NgSelectModule,
         HttpClientModule,
         ImageUploadComponent,
-        RouterModule
+        RouterModule,
+        CdkTableModule
     ],
     entryComponents: []
 })

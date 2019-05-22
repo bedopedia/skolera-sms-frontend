@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="pt-8 mt-8"></div>
+    <div class="ptb-6 plr-6 content-shadow bg-white mb-6">
+        <h2 class="section-title mb-3 title-with-btn mb-10">
+            <div class="inline-block">
+                <i class="fa fa-caret-right mr-3"></i>
+                Applicant Registration
+            </div>
+            <div class="form-group width-100 max-300 mb-0">
+                <div class="input-with-icon bg-white">
+                    <ng-select class="s-control s-select" [clearable]="false" placeholder="Select a status"
+                        [markFirst]="true" [items]="chapters" bindLabel="name" name="chapter"
+                        [(ngModel)]="selectedChapter" (change)="chapterSelected()" required>
+                    </ng-select>
+                    <i class="fa fa-caret-down input-icon"></i>
+                </div>
+            </div>
+        </h2>
+        <table mat-table #table [dataSource]="dataSource" class="table s-table table-striped">
+            <ng-container *ngFor="let column of columns" [cdkColumnDef]="column.columnDef">
+                <mat-header-cell *cdkHeaderCellDef>
+                    <div class="size-small weight-bold">
+                        {{ column.header }}
+                    </div>
+                </mat-header-cell>
+                <mat-cell *cdkCellDef="let row">
+                    <div class="size-small">
+                        <a class="hover-link" routerLink="{{'/students/profile/' + column.cell(row).id}}"
+                            *ngIf="column.cell(row).hasOwnProperty('label')">{{column.cell(row).label}}
+                        </a>
+                        <span *ngIf="!column.cell(row).hasOwnProperty('label')">{{column.cell(row)}}</span>
+                    </div>
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </table>
+    </div>
+</div>

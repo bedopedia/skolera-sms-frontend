@@ -56,9 +56,11 @@
 [class*="border-"] {
     border-color: #e8e8e8;
 }
+
 .no-select {
     @extend %no-select;
- }
+}
+
 .close-icon::before {
     font-weight: bold;
     color: inherit;
@@ -315,7 +317,9 @@ table {
 }
 
 .s-table {
-    th, th.mat-header-cell {
+
+    th,
+    th.mat-header-cell {
         font-size: 1rem;
         line-height: 1.5rem;
         font-weight: 700;
@@ -323,24 +327,35 @@ table {
         z-index: 9 !important;
         color: $text;
     }
+
     td {
         font-size: 1rem;
         line-height: 1.5rem;
     }
-    th, td {
+
+    th,
+    td {
         padding: 1.2rem 1rem;
         word-break: break-word;
         font-family: $fontFamily;
     }
-    td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
-        &:first-child, &:last-child, & {
+
+    td.mat-cell,
+    td.mat-footer-cell,
+    th.mat-header-cell {
+
+        &:first-child,
+        &:last-child,
+        & {
             padding: 1.2rem 1rem;
             word-break: break-word;
             font-family: $fontFamily;
         }
     }
+
     .mat-sort-header-container {
         position: relative;
+
         .mat-sort-header-arrow {
             position: absolute;
         }
@@ -350,8 +365,11 @@ table {
 .s-table.table-hovered tbody tr {
     transition: 0.3s;
 }
+
 .s-table.table-stripped tr {
-    td, th {
+
+    td,
+    th {
         border: 1px solid $border;
     }
 }
@@ -380,9 +398,11 @@ table {
 .text-center .mat-sort-header-container {
     justify-content: center;
 }
+
 .text-left .mat-sort-header-container {
     justify-content: flex-start;
 }
+
 .text-right .mat-sort-header-container {
     justify-content: flex-end;
 }
@@ -464,9 +484,11 @@ table {
     border-radius: 5px !important;
     box-sizing: border-box;
 }
+
 body .mce-floatpanel {
     background-color: #fff !important;
 }
+
 .has-attachment .mce-tinymce.mce-container {
     border-bottom: 0 !important;
     border-bottom-right-radius: 0 !important;
@@ -585,17 +607,21 @@ iframe {
         width: 100px;
         left: -35px;
     }
-    .stepper-checked, &.past .stepper-number {
+
+    .stepper-checked,
+    &.past .stepper-number {
         display: none;
     }
+
     &.past .stepper-checked {
         display: inline-block;
     }
-    
+
 
 }
 
-.stepper-point.active, .stepper-point.past{
+.stepper-point.active,
+.stepper-point.past {
     @include gradientHorizontalTop(#007ee5, #007ee5);
     color: #fff;
     border-color: #fff;
@@ -622,10 +648,12 @@ iframe {
     border-bottom-right-radius: 4px;
     border: 2px solid #e1e5f0;
     border-top-width: 0px;
+
     &.upload-disabled label {
         opacity: 0.5;
         cursor: not-allowed;
     }
+
     &.standalone-uploader {
         border-top-width: 2px;
         border-radius: 4px !important;
@@ -684,6 +712,7 @@ iframe {
     box-shadow: 0 2px 3px 0 #f3f3f3;
     padding: 0;
     position: relative;
+
     .single-attachment-container {
         padding: 5px;
     }
@@ -951,11 +980,13 @@ iframe {
             padding: 12px;
             border-bottom: 1px solid #e5e5e5;
         }
+
         .notifications-body {
             overflow: auto;
             max-height: calc(100vh - 250px);
             height: 400px;
         }
+
         .notifications-footer {
             background-color: #f9faff;
             text-align: center;
@@ -986,6 +1017,7 @@ iframe {
 
 .hover-shadow {
     transition: 0.3s;
+
     &:hover {
         @include boxshadow(0 8px 18px 0 rgba(122, 137, 147, 0.3));
     }
@@ -1073,6 +1105,7 @@ iframe {
         font-size: 0.85em;
     }
 }
+
 .date-badge-lg {
     width: 4em;
     height: 4em;
@@ -1115,7 +1148,8 @@ body,
     padding-bottom: 50px;
 }
 
-.skolera-modal, .complex-skolera-modal {
+.skolera-modal,
+.complex-skolera-modal {
 
     .modal-background {
         background-color: rgba(74, 74, 74, .5);
@@ -1161,6 +1195,7 @@ body,
             border-radius: 4px;
             background: #fff;
             scroll-behavior: smooth;
+
             &.min-modal {
                 min-height: 80vh;
             }
@@ -1174,7 +1209,8 @@ body,
 
     }
 
-    &.modal-tooltip, &.modal-confirm {
+    &.modal-tooltip,
+    &.modal-confirm {
         .modal-wrapper {
             animation: scaleDown 0.3s ease 0s 1 forwards;
             transform: scale(1.5);
@@ -1191,6 +1227,7 @@ body,
 .cdk-overlay-container {
     z-index: 98 !important;
 }
+
 .cdk-overlay-pane {
     max-height: none !important;
 }
@@ -1224,8 +1261,10 @@ body,
         display: none;
     }
 }
+
 .cdk-global-scrollblock body {
     overflow: hidden;
+
     .main-container {
 
         .main-content,
@@ -1274,6 +1313,7 @@ body,
         transform: scale(0.95);
     }
 }
+
 //img uploader
 .upload-img {
     max-width: 140px;
@@ -1413,11 +1453,13 @@ body,
 
 .mat-sort-header-container {
     display: inline-flex;
-    padding-right: 15px; 
+    padding-right: 15px;
 }
+
 .text-center .mat-sort-header-container {
-    padding-left: 15px; 
+    padding-left: 15px;
 }
+
 .mat-sort-header-arrow {
     right: 0;
 }
@@ -1476,29 +1518,34 @@ body,
         animation: none;
     }
 }
-.arrow{
+
+.arrow {
     height: 10px;
     width: 18px;
     background-repeat: no-repeat;
     cursor: pointer
 }
-.black-arrow{
+
+.black-arrow {
     height: 20px;
     width: 17px;
     background-repeat: no-repeat;
     cursor: pointer
 }
 
-.top-arrow{
+.top-arrow {
     // background-image: url(src/assets/images/top-arrow-icon.svg);  
 }
-.down-arrow{
+
+.down-arrow {
     // background-image: url(src/assets/images/down-arrow-icon.svg);
 }
-.left-arrow{
+
+.left-arrow {
     // background-image: url(src/assets/images/black-left.svg);
 }
-.down-black-arrow{
+
+.down-black-arrow {
     // background-image: url(src/assets/images/black.svg);
 }
 
@@ -1567,6 +1614,7 @@ body,
 
 #app-notifications-container {
     right: 20px;
+
     .app-notification {
         margin-left: auto;
     }
@@ -1675,6 +1723,7 @@ body,
         .content-container {
             min-width: 100%;
             transition: 0.6s;
+
             &.tabs-zero {
                 height: 0;
                 overflow: visible;
@@ -1698,16 +1747,17 @@ body,
 // .
 // loading bar
 
-ngx-loading-bar{
+ngx-loading-bar {
     div .bar {
         height: 3px !important;
     }
-    div#loading-bar-spinner{
+
+    div#loading-bar-spinner {
         display: none !important;
     }
 }
 
-ngx-loading-bar{
+ngx-loading-bar {
     div .bar {
         background: $primary !important;
     }
@@ -1718,6 +1768,7 @@ ngx-loading-bar{
 // piechart with info
 .chart-with-text {
     position: relative;
+
     .chart-text {
         position: absolute;
         top: 0;
@@ -1728,9 +1779,11 @@ ngx-loading-bar{
         @extend %flex-centered;
         padding: 4px;
     }
+
     .chart-container {
         position: relative;
         z-index: 2;
+
         .highcharts-background {
             fill: transparent !important;
         }
@@ -1742,6 +1795,7 @@ ngx-loading-bar{
         right: auto;
         left: 0;
     }
+
     .input-with-icon .s-control {
         padding: 0.375rem 0.875rem;
         padding-left: 2rem;
@@ -1752,4 +1806,62 @@ ngx-loading-bar{
     position: sticky;
     top: 0;
     z-index: 9;
+}
+
+mat-footer-row,
+mat-header-row,
+mat-row {
+    border-bottom-width: 1px !important;
+    border-color: $border;
+
+    &:last-child {
+        border-bottom-width: 1px !important;
+    }
+}
+
+mat-header-row {
+    background: rgba($color: $primary, $alpha: 0.02);
+
+    &:first-child {
+        border-top-width: 1px !important;
+    }
+}
+
+mat-row {
+    transition: 0.3s;
+
+    &:nth-child(even) {
+        background: rgba($color: #000, $alpha: 0.02);
+    }
+
+    &:hover {
+        background: rgba($color: $primary, $alpha: 0.05);
+    }
+}
+
+mat-cell,
+mat-footer-cell,
+mat-header-cell {
+    &:first-of-type {
+        padding-left: 0;
+    }
+
+    padding: 0.75rem
+}
+
+mat-cell,
+mat-footer-cell,
+mat-header-cell {
+    border-left: 1px solid $border;
+
+    &:last-child {
+        border-right: 1px solid $border;
+    }
+}
+
+tr.mat-footer-row, tr.mat-row {
+    display: flex;
+    border-bottom: 1px solid $border;
+    font-weight: bold;
+    background: rgba($color: $primary, $alpha: 0.05)
 }

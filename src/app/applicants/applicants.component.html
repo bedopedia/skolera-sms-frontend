@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="pt-8 mt-8"></div>
+    <div class="ptb-6 plr-6 content-shadow bg-white mb-6">
+        <h2 class="section-title mb-3 title-with-btn">
+            <div class="inline-block">
+                <i class="fa fa-caret-right mr-3"></i>
+                Applicant Registration
+            </div>
+            <button class="s-btn btn-secondary">
+                + Add Course
+            </button>
+        </h2>
+        <p class="size-small max-600 mb-10">
+            Create and manage applications for new joinees of courses in your organisation. You can activate applicant
+            registration for each course with customized forms and fields based on your requirements.
+        </p>
+        <table mat-table #table [dataSource]="dataSource" class="table s-table table-striped">
+            <ng-container *ngFor="let column of columns" [cdkColumnDef]="column.columnDef">
+                <mat-header-cell *cdkHeaderCellDef>
+                    <div class="size-small weight-bold">
+                        {{ column.header }}
+                    </div>
+                </mat-header-cell>
+                <mat-cell *cdkCellDef="let row">
+                    <div class="size-small">
+                        <a class="hover-link" routerLink="{{'level/' + column.cell(row).id}}"
+                            *ngIf="column.cell(row).hasOwnProperty('label')">{{column.cell(row).label}}</a>
+                        <span *ngIf="!column.cell(row).hasOwnProperty('label')">{{column.cell(row)}}</span>
+                    </div>
+                </mat-cell>
+                <mat-footer-cell *matFooterCellDef>{{column.total(column.columnDef)}}</mat-footer-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+        </table>
+    </div>
+</div>
