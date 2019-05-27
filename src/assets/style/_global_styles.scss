@@ -8,6 +8,10 @@
     display: none !important;
 }
 
+.border-default {
+    border: 1px solid $border;
+}
+
 .loading-icon {
     animation: rotate360 1.5s linear 0s infinite none;
 }
@@ -1805,7 +1809,7 @@ ngx-loading-bar {
 .app-header-sticky {
     position: sticky;
     top: 0;
-    z-index: 9;
+    z-index: 19;
 }
 
 mat-footer-row,

@@ -1,0 +1,58 @@
+<form [formGroup]="guardianForm">
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="form-group inline-form-group mb-0" [class.has-error]="isSubmitted && guardianForm.get('name').invalid">
+                <label for="">Name <sup class="text-error">*</sup></label>
+                <input type="text" class="s-control" placeholder="Enter guardian name" formControlName="name">
+            </div>
+        </div>
+        <div class="col-md-12 mb-4">
+            <div class="form-group inline-form-group mb-0" [class.has-error]="isSubmitted && guardianForm.get('relation').invalid">
+                <label for="">Relation <sup class="text-error">*</sup></label>
+                <div class="input-with-icon bg-white">
+                    <ng-select class="s-control s-select" [clearable]="false" placeholder="Select a relation"
+                        [markFirst]="true" [items]="relations" formControlName="relation">
+                    </ng-select>
+                    <i class="fa fa-caret-down input-icon"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 mb-4">
+            <div class="form-group inline-form-group mb-0"
+                [class.has-error]="isSubmitted && guardianForm.get('primary_address').invalid">
+                <label for="">Primary Address</label>
+                <input type="text" class="s-control" placeholder="Enter primary address"
+                    formControlName="primary_address">
+            </div>
+        </div>
+        <div class="col-md-12 mb-4">
+            <div class="form-group inline-form-group mb-0"
+                [class.has-error]="isSubmitted && guardianForm.get('secondary_address').invalid">
+                <label for="">Secondary Address</label>
+                <input type="text" class="s-control" placeholder="Enter secondary address"
+                    formControlName="secondary_address">
+            </div>
+        </div>
+        <div class="col-md-12 mb-4">
+            <div class="form-group inline-form-group mb-0"
+                [class.has-error]="isSubmitted && guardianForm.get('mobile_number').invalid">
+                <label for="">Mobile <sup class="text-error">*</sup></label>
+                <input type="tel" class="s-control" placeholder="Enter mobile number" formControlName="mobile_number">
+            </div>
+            <div class="min-100 mt-1 size-small text-right text-error"
+                *ngIf="guardianForm.get('mobile_number').errors?.pattern && isSubmitted">
+                Invalid mobile number
+            </div>
+        </div>
+        <div class="col-md-12 mb-4">
+            <div class="form-group inline-form-group mb-0" [class.has-error]="isSubmitted && guardianForm.get('email').invalid">
+                <label for="">E-mail</label>
+                <input type="email" class="s-control" placeholder="Enter email address" formControlName="email">
+            </div>
+            <div class="min-100 mt-1 size-small text-right text-error"
+                *ngIf="guardianForm.get('email').errors?.pattern && isSubmitted">
+                Invalid email address
+            </div>
+        </div>
+    </div>
+</form>
