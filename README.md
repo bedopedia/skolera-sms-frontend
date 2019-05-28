@@ -3,7 +3,7 @@
 ## Versions
 
 Angular CLI: `7.1.4`  <br>
-Node: `10.15.3` <br>
+Node: `12.3.1` <br>
 Angular: `7.1.4`<br>
 NPM: `6.4.1`
 
