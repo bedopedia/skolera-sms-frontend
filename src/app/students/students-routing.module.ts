@@ -7,7 +7,7 @@ import { AdmissionSuccessComponent } from './admission-success/admission-success
 
 const routes: Routes = [
     {
-        path: '', component: StudentsComponent
+        path: '', redirectTo: 'admission'
     },
     {
         path: 'admission', component: StudentAdmissionComponent
@@ -16,8 +16,11 @@ const routes: Routes = [
         path: 'admission-success', component: AdmissionSuccessComponent
     },
     {
-        path: 'profile/:id', component: StudentProfileComponent
-    }
+        path: '**', redirectTo: 'admission'
+    },
+    // {
+    //     path: 'profile/:id', component: StudentProfileComponent
+    // }
 ];
 
 @NgModule({
