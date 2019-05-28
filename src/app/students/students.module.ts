@@ -8,7 +8,7 @@ import { SharedModule } from '@shared/shared.module';
 import { StudentProfileComponent } from './student-profile/student-profile.component';
 import { GuardianFormComponent } from './guardian-form/guardian-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgxCaptchaModule } from 'ngx-captcha';
+// import { NgxCaptchaModule } from 'ngx-captcha';
 
 @NgModule({
     declarations: [
@@ -21,8 +21,7 @@ import { NgxCaptchaModule } from 'ngx-captcha';
         CommonModule,
         StudentsRoutingModule,
         SharedModule,
-        ReactiveFormsModule,
-        NgxCaptchaModule
+        ReactiveFormsModule
     ]
 })
 export class StudentsModule { }

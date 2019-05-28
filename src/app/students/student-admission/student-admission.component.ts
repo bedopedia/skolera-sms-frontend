@@ -19,6 +19,7 @@ export class StudentAdmissionComponent implements OnInit {
     captchaVerified = false;
     recaptcha;
     guardiansError: boolean = false;
+    isSubmitting = false;
     constructor(
         private formBuilder: FormBuilder
     ) { }
@@ -45,20 +46,20 @@ export class StudentAdmissionComponent implements OnInit {
         this.currentStep = 2;
     }
     submitGuardians() {
-        let canProceed = true;
         this.guardiansError = false;
         this.guardians.forEach(guardian => {
             guardian.isSubmitted = true;
-            if (!guardian.form.valid) canProceed = false;
-            this.guardiansError = true;
+            if (!guardian.form.valid) {
+                this.guardiansError = true;
+            }
         })
-        if (!canProceed) return;
-        this.currentStep = 3;
-    }
-    submitStudent() {
-        if(!this.captchaVerified) return;
+        if (this.guardiansError) return;
         this.createStudent();
     }
+    // submitStudent() {
+    //     if(!this.captchaVerified) return;
+    //     this.createStudent();
+    // }
     addGuardianFormGroup() {
         this.guardians.push({
             form: this.buildGuardianFormGroup(),
@@ -86,18 +87,19 @@ export class StudentAdmissionComponent implements OnInit {
                 "guardians_attributes": guardiansAttributes
             }
         }
+        this.isSubmitting = true;
         console.log(application)
     }
-    captchaLoad() {
+    // captchaLoad() {
 
-    }
-    captchaReady() {
+    // }
+    // captchaReady() {
 
-    }
-    captchaExpire() {
+    // }
+    // captchaExpire() {
 
-    }
-    captchaSuccess(event) {
-        this.captchaVerified = true;
-    }
+    // }
+    // captchaSuccess(event) {
+    //     this.captchaVerified = true;
+    // }
 }

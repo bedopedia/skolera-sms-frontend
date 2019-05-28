@@ -15,13 +15,13 @@
                     Student Guardians
                 </p>
             </div>
-            <div class="stepper-line" [class.next]="currentStep >= 2" [class.active]="currentStep >= 3"></div>
+            <!-- <div class="stepper-line" [class.next]="currentStep >= 2" [class.active]="currentStep >= 3"></div>
             <div class="stepper-point" [class.active]="currentStep >= 3">
                 3
                 <p class="stepper-title">
                     Verify & Submit
                 </p>
-            </div>
+            </div> -->
         </div>
         <div class="pt-8"></div>
         <div class="step-1" [hidden]="currentStep != 1">
@@ -179,14 +179,15 @@
                     <button (click)="currentStep = 1" class="s-btn btn-lg btn-secondary max-200 btn-block">
                         Back
                     </button>
-                    <button (click)="submitGuardians()" class="s-btn btn-lg btn-primary max-200 btn-block">
-                        Save & proceed
+                    <button [disabled]="isSubmitting" (click)="submitGuardians()" class="s-btn btn-lg btn-primary max-200 btn-block">
+                        <span *ngIf="!isSubmitting">Submit</span>
+                        <span class="fa fa-spinner loading-icon" *ngIf="isSubmitting"></span>
                     </button>
                 </div>
             </div>
         </div>
         <div class="step-3" [hidden]="currentStep != 3">
-            <div class="max-700 max-center">
+            <!-- <div class="max-700 max-center">
                 <div class="flex flex-center mt-6">
                     <form [formGroup]="captchaFormGroup">
                         <ngx-recaptcha2 #captchaElem [siteKey]="'6LcsraUUAAAAAMIrR32Q5dv_XuRr_XCGtROmaxId'"
@@ -209,7 +210,7 @@
                         Submit
                     </button>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
