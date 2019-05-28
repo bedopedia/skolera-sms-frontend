@@ -8,6 +8,7 @@ import { SharedModule } from '@shared/shared.module';
 import { StudentProfileComponent } from './student-profile/student-profile.component';
 import { GuardianFormComponent } from './guardian-form/guardian-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AdmissionSuccessComponent } from './admission-success/admission-success.component';
 // import { NgxCaptchaModule } from 'ngx-captcha';
 
 @NgModule({
@@ -15,7 +16,8 @@ import { ReactiveFormsModule } from '@angular/forms';
         StudentAdmissionComponent,
         StudentsComponent,
         StudentProfileComponent,
-        GuardianFormComponent
+        GuardianFormComponent,
+        AdmissionSuccessComponent
     ],
     imports: [
         CommonModule,

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { StudentsComponent } from './students.component';
 import { StudentAdmissionComponent } from './student-admission/student-admission.component';
 import { StudentProfileComponent } from './student-profile/student-profile.component';
+import { AdmissionSuccessComponent } from './admission-success/admission-success.component';
 
 const routes: Routes = [
     {
@@ -10,6 +11,9 @@ const routes: Routes = [
     },
     {
         path: 'admission', component: StudentAdmissionComponent
+    },
+    {
+        path: 'admission-success', component: AdmissionSuccessComponent
     },
     {
         path: 'profile/:id', component: StudentProfileComponent
