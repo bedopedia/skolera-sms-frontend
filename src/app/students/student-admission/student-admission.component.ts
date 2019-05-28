@@ -18,6 +18,7 @@ export class StudentAdmissionComponent implements OnInit {
     protected captchaFormGroup: FormGroup;
     captchaVerified = false;
     recaptcha;
+    guardiansError: boolean = false;
     constructor(
         private formBuilder: FormBuilder
     ) { }
@@ -45,9 +46,11 @@ export class StudentAdmissionComponent implements OnInit {
     }
     submitGuardians() {
         let canProceed = true;
+        this.guardiansError = false;
         this.guardians.forEach(guardian => {
             guardian.isSubmitted = true;
             if (!guardian.form.valid) canProceed = false;
+            this.guardiansError = true;
         })
         if (!canProceed) return;
         this.currentStep = 3;
