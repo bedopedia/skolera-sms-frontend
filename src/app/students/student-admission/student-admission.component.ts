@@ -22,15 +22,21 @@ export class StudentAdmissionComponent implements OnInit {
     guardiansError: boolean = false;
     isSubmitting = false;
     selectedCountry;
+    selectedLevel = null;
+    levelError = false;
+    levels = [];
+    maxAllowedDate = new Date();
     constructor(
         private formBuilder: FormBuilder,
         private applicationService: ApplicationService,
         private router: Router
     ) { }
     ngOnInit() {
-        this.captchaFormGroup = this.formBuilder.group({
-            recaptcha: ['', Validators.required]
-        });
+        // this.captchaFormGroup = this.formBuilder.group({
+        //     recaptcha: ['', Validators.required]
+        // });
+        this.maxAllowedDate.setDate( this.maxAllowedDate.getDate() - 6 );
+        this.maxAllowedDate.setFullYear( this.maxAllowedDate.getFullYear() - 2 );
         this.guardians = [
             {
                 form: this.buildGuardianFormGroup(),
@@ -42,12 +48,27 @@ export class StudentAdmissionComponent implements OnInit {
             }
         ]
     }
+    getLevels() {
+        if (this.levels.length > 0) return;
+        this.applicationService.getLevels().subscribe(
+            (res: any) => {
+                this.levels = res;
+            }
+        )
+    }
     changeStep(step) {
         this.currentStep = step;
     }
+    proceedToDetails() {
+        if (!this.selectedLevel || this.selectedLevel == '') {
+            this.levelError = true;
+            return;
+        }
+        this.currentStep = 2;
+    }
     OnApplicationAttributesSubmit() {
         if (!this.applicationAttributesForm.valid) return;
-        this.currentStep = 2;
+        this.currentStep = 3;
     }
     submitGuardians() {
         this.guardiansError = false;
@@ -87,6 +108,7 @@ export class StudentAdmissionComponent implements OnInit {
         let guardiansAttributes = this.guardians.map(guardian => guardian.form.value)
         let application = {
             "application": {
+                "level_id": this.selectedLevel,
                 "applicant_attributes": {
                     ...this.applicationAttributesForm.value,
                     "guardians_attributes": guardiansAttributes
