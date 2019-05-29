@@ -8,21 +8,26 @@ import { SharedModule } from '@shared/shared.module';
 import { StudentProfileComponent } from './student-profile/student-profile.component';
 import { GuardianFormComponent } from './guardian-form/guardian-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgxCaptchaModule } from 'ngx-captcha';
+import { AdmissionSuccessComponent } from './admission-success/admission-success.component';
+import { ApplicationService } from '@skolera/services';
+// import { NgxCaptchaModule } from 'ngx-captcha';
 
 @NgModule({
     declarations: [
         StudentAdmissionComponent,
         StudentsComponent,
         StudentProfileComponent,
-        GuardianFormComponent
+        GuardianFormComponent,
+        AdmissionSuccessComponent
     ],
     imports: [
         CommonModule,
         StudentsRoutingModule,
         SharedModule,
-        ReactiveFormsModule,
-        NgxCaptchaModule
+        ReactiveFormsModule
+    ],
+    providers: [
+        ApplicationService
     ]
 })
 export class StudentsModule { }
