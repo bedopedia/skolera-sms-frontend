@@ -21,6 +21,7 @@ export class StudentAdmissionComponent implements OnInit {
     recaptcha;
     guardiansError: boolean = false;
     isSubmitting = false;
+    selectedCountry;
     constructor(
         private formBuilder: FormBuilder,
         private applicationService: ApplicationService,
