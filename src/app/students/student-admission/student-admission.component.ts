@@ -97,7 +97,6 @@ export class StudentAdmissionComponent implements OnInit {
         this.isSubmitting = true;
         this.applicationService.addStudent(application).subscribe(
             res => {
-                console.log(res);
                 this.router.navigate(['students/admission-success']);
             },
             err => {
