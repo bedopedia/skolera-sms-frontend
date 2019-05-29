@@ -14,4 +14,7 @@ export class ApplicationService {
             }
         });
     }
+    getLevels() {
+        return this.http.get(`http://cisregister.skolera.com/api/v1/levels`);
+    }
 }
