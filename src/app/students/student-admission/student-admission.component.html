@@ -75,7 +75,7 @@
                                 <label for="">Country <sup class="text-error">*</sup></label>
                                 <div class="input-with-icon bg-white">
                                     <ng-select class="s-control s-select" [clearable]="false"
-                                        placeholder="Select a country" [items]="countries" bindLabel="name"
+                                        placeholder="Select a country" [items]="countries" bindLabel="name"  bindValue="name"
                                         [markFirst]="true" name="birth_country" #country="ngModel" required
                                         [(ngModel)]="selectedCountry">
                                     </ng-select>

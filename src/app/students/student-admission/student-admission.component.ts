@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { COUNTRIES } from '@skolera/resources';
 
 @Component({
     selector: 'app-student-admission',
@@ -9,7 +10,7 @@ import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class StudentAdmissionComponent implements OnInit {
 
     currentStep = 1;
-    countries = ['Egypt'];
+    countries = COUNTRIES;
     @ViewChild('applicationAttributesForm') applicationAttributesForm: NgForm;
     guardians = [];
     phonePattern = "[0-9]{8,16}$";
