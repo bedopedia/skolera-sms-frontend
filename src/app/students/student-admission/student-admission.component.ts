@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { COUNTRIES } from '@skolera/resources';
+import { ApplicationService } from '@skolera/services';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-student-admission',
@@ -22,7 +24,9 @@ export class StudentAdmissionComponent implements OnInit {
     guardiansError: boolean = false;
     isSubmitting = false;
     constructor(
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        private applicationService: ApplicationService,
+        private router: Router
     ) { }
     ngOnInit() {
         this.captchaFormGroup = this.formBuilder.group({
@@ -77,19 +81,29 @@ export class StudentAdmissionComponent implements OnInit {
             'primary_address': ['', []],
             'secondary_address': ['', []],
             'mobile_number': ['', [Validators.required, Validators.pattern('[0-9]{8,16}$')]],
-            'email': ['', [Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]]
+            'email': ['', [Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'), Validators.required]]
         })
     }
     createStudent() {
         let guardiansAttributes = this.guardians.map(guardian => guardian.form.value)
         let application = {
-            "applicant_attributes": {
-                ...this.applicationAttributesForm.value,
-                "guardians_attributes": guardiansAttributes
+            "application": {
+                "applicant_attributes": {
+                    ...this.applicationAttributesForm.value,
+                    "guardians_attributes": guardiansAttributes
+                }
             }
         }
         this.isSubmitting = true;
-        console.log(application)
+        this.applicationService.addStudent(application).subscribe(
+            res => {
+                console.log(res);
+                this.router.navigate(['students/admission-success']);
+            },
+            err => {
+                this.isSubmitting = false;
+            }
+        );
     }
     // captchaLoad() {
 

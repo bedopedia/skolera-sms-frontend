@@ -46,7 +46,7 @@
         </div>
         <div class="col-md-12 mb-4">
             <div class="form-group inline-form-group mb-0" [class.has-error]="isSubmitted && guardianForm.get('email').invalid">
-                <label for="">E-mail</label>
+                <label for="">E-mail <sup class="text-error">*</sup></label>
                 <input type="email" class="s-control" placeholder="Enter email address" formControlName="email">
             </div>
             <div class="min-100 mt-1 size-small text-right text-error"

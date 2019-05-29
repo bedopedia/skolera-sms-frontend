@@ -9,6 +9,7 @@ import { StudentProfileComponent } from './student-profile/student-profile.compo
 import { GuardianFormComponent } from './guardian-form/guardian-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AdmissionSuccessComponent } from './admission-success/admission-success.component';
+import { ApplicationService } from '@skolera/services';
 // import { NgxCaptchaModule } from 'ngx-captcha';
 
 @NgModule({
@@ -24,6 +25,9 @@ import { AdmissionSuccessComponent } from './admission-success/admission-success
         StudentsRoutingModule,
         SharedModule,
         ReactiveFormsModule
+    ],
+    providers: [
+        ApplicationService
     ]
 })
 export class StudentsModule { }
