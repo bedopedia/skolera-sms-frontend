@@ -103,7 +103,7 @@
                             <div class="form-group inline-form-group mb-0"
                                 [class.has-error]="applicationAttributesForm.submitted && mobileNumber.invalid">
                                 <label for="">Mobile <sup class="text-error">*</sup></label>
-                                <input type="tel" [pattern]="phonePattern" class="s-control"
+                                <input type="tel" class="s-control"
                                     placeholder="Enter mobile number" name="mobile_number" ngModel
                                     #mobileNumber="ngModel" required>
                             </div>
@@ -116,7 +116,7 @@
                             <div class="form-group inline-form-group mb-0"
                                 [class.has-error]="applicationAttributesForm.submitted && landline.invalid">
                                 <label for="">Landline</label>
-                                <input type="tel" [pattern]="landlinePattern" class="s-control"
+                                <input type="tel" class="s-control"
                                     placeholder="Enter landline" name="landline" ngModel #landline="ngModel">
                             </div>
                             <div class="min-100 mt-1 size-small text-right text-error"

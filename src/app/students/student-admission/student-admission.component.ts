@@ -15,9 +15,7 @@ export class StudentAdmissionComponent implements OnInit {
     countries = COUNTRIES;
     @ViewChild('applicationAttributesForm') applicationAttributesForm: NgForm;
     guardians = [];
-    phonePattern = "[0-9]{8,16}$";
-    landlinePattern = "[0-9]{6,12}$";
-    emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
+    emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     protected captchaFormGroup: FormGroup;
     captchaVerified = false;
     recaptcha;
@@ -80,8 +78,8 @@ export class StudentAdmissionComponent implements OnInit {
             'relation': ['Father', [Validators.required]],
             'primary_address': ['', []],
             'secondary_address': ['', []],
-            'mobile_number': ['', [Validators.required, Validators.pattern('[0-9]{8,16}$')]],
-            'email': ['', [Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'), Validators.required]]
+            'mobile_number': ['', [Validators.required]],
+            'email': ['', [Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/), Validators.required]]
         })
     }
     createStudent() {
