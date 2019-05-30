@@ -10,6 +10,7 @@ import { GuardianFormComponent } from './guardian-form/guardian-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AdmissionSuccessComponent } from './admission-success/admission-success.component';
 import { ApplicationService } from '@skolera/services';
+import { CoreModule } from '@core/core.module';
 // import { NgxCaptchaModule } from 'ngx-captcha';
 
 @NgModule({
@@ -24,7 +25,8 @@ import { ApplicationService } from '@skolera/services';
         CommonModule,
         StudentsRoutingModule,
         SharedModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        CoreModule.forChild()
     ],
     providers: [
         ApplicationService

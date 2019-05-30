@@ -2,6 +2,8 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthenticationService } from './services';
 import { AuthenticationGuard } from './guards';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpConfigInterceptor } from '@core/services';
 
 @NgModule({
     declarations: [],
@@ -17,14 +19,25 @@ export class CoreModule {
             ngModule: CoreModule,
             providers: [
                 AuthenticationService,
-                AuthenticationGuard
+                AuthenticationGuard,
+                { 
+                    provide: HTTP_INTERCEPTORS, 
+                    useClass: HttpConfigInterceptor, 
+                    multi: true 
+                }
             ]
         }
     }
     static forChild(): ModuleWithProviders {
         return {
             ngModule: CoreModule,
-            providers: []
+            providers: [
+                { 
+                    provide: HTTP_INTERCEPTORS, 
+                    useClass: HttpConfigInterceptor, 
+                    multi: true 
+                }
+            ]
         }
     }
 }

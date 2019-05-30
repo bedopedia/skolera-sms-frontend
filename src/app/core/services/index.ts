@@ -1,2 +1,2 @@
 export * from './authentication.service'
-export * from './httpconfig.interceptor'
+export { HttpConfigInterceptor } from './httpconfig.interceptor'
