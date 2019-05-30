@@ -106,7 +106,9 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    color: $primary !important;
 }
+
 .btn-link.btn-block {
     display: flex;
 }

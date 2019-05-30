@@ -1,8 +1,10 @@
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { Router } from '@angular/router';
+import { baseUrl } from 'src/environments/environment';
+import { Globals } from '@core/globals';
 
 @Injectable()
 export class AuthenticationService {
@@ -11,23 +13,30 @@ export class AuthenticationService {
     sessionHeaders;
     constructor(
         private http: HttpClient,
-        private router: Router
-    ) {
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    }
+        private router: Router,
+        public globals: Globals
+    ) { }
 
-    login(username: string, password: string) {
-        
+    login(email: string, password: string) {
+        return this.http.post(`${baseUrl}/api/v1/auth/sign_in`,
+            {
+                "email": email,
+                "password": password
+            }, { observe: 'response' })
     }
     logout() {
         localStorage.clear();
+        this.setCurrentUser();
         this.router.navigate(['login']);
     }
-    resetHeaders(){
+    resetHeaders() {
         this.sessionHeaders = {
             'Access-Control-Allow-Origin': '*',
         };
         localStorage.setItem('sessionHeaders', JSON.stringify(this.sessionHeaders));
+    }
+    setCurrentUser() {
+        this.globals.currentUser = this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     }
     getCurrentUser() {
         return JSON.parse(localStorage.getItem('currentUser'));

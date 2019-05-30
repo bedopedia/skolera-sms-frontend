@@ -4,6 +4,7 @@ import { AuthenticationService } from './services';
 import { AuthenticationGuard } from './guards';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpConfigInterceptor } from '@core/services';
+import { Globals } from './globals';
 
 @NgModule({
     declarations: [],
@@ -20,6 +21,7 @@ export class CoreModule {
             providers: [
                 AuthenticationService,
                 AuthenticationGuard,
+                Globals,
                 { 
                     provide: HTTP_INTERCEPTORS, 
                     useClass: HttpConfigInterceptor, 

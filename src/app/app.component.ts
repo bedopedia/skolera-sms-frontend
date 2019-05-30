@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Globals } from '@core/globals';
+import { AuthenticationService } from '@core/services';
 
 @Component({
   selector: 'app-root',
@@ -6,6 +8,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'skolera-sms';
-  imageSrc = null
+    constructor(
+        public globals: Globals,
+        private authenticationService: AuthenticationService
+    ) {
+
+    }
+    logout(){
+        this.authenticationService.logout();
+    }
 }
