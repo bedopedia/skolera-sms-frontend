@@ -1,19 +1,8 @@
 
-import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { baseUrl } from './../../../environments/environment';
 
-import { from } from 'rxjs';
 import { Router } from '@angular/router';
-const httpOptions = {
-    headers: new HttpHeaders({
-        'access-token': '',
-        'client': '',
-        'uid': ''
-    })
-};
-
 
 @Injectable()
 export class AuthenticationService {

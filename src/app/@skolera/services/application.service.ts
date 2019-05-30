@@ -8,13 +8,9 @@ export class ApplicationService {
         private http: HttpClient
     ) { }
     addStudent(student) {
-        return this.http.post(`http://cisregister.skolera.com/api/v1/applications`,student, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
+        return this.http.post(`https://cisregister.skolera.com/api/v1/applications`,student);
     }
     getLevels() {
-        return this.http.get(`http://cisregister.skolera.com/api/v1/levels`);
+        return this.http.get(`https://cisregister.skolera.com/api/v1/levels`);
     }
 }

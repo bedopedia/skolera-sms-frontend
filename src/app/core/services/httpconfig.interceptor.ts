@@ -9,7 +9,7 @@ import {
 
 import { Observable, throwError, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { AuthenticationService } from '@core/services';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable()
 export class HttpConfigInterceptor implements HttpInterceptor {
@@ -30,8 +30,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         });
         return next.handle(request).pipe(
             map((event: HttpEvent<any>) => {
-                if (event instanceof HttpResponse) {
-                }
+                if (event instanceof HttpResponse) {}
                 return event;
             }),
             catchError((error: HttpErrorResponse) => {
