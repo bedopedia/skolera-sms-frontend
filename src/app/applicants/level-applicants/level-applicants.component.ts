@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ApplicationService } from '@skolera/services';
+import { ActivatedRoute } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-level-applicants',
@@ -22,66 +25,34 @@ export class LevelApplicantsComponent implements OnInit {
     ];
 
     displayedColumns = this.columns.map(c => c.columnDef);
-    dataSource = [
-        {
-            name: 'Mariam Ahmed Baraka',
-            id: 3,
-            date: '30/12/2018',
-            applicationFees: 'Paid',
-            tuitionFees: 'Not Paid',
-        },
-        {
-            name: 'Mariam Ahmed Baraka',
-            id: 3,
-            date: '30/12/2018',
-            applicationFees: 'Paid',
-            tuitionFees: 'Not Paid',
-        },
-        {
-            name: 'Mariam Ahmed Baraka',
-            id: 3,
-            date: '30/12/2018',
-            applicationFees: 'Paid',
-            tuitionFees: 'Not Paid',
-        },
-        {
-            name: 'Mariam Ahmed Baraka',
-            id: 3,
-            date: '30/12/2018',
-            applicationFees: 'Paid',
-            tuitionFees: 'Not Paid',
-        },
-        {
-            name: 'Mariam Ahmed Baraka',
-            id: 3,
-            date: '30/12/2018',
-            applicationFees: 'Paid',
-            tuitionFees: 'Not Paid',
-        },
-        {
-            name: 'Mariam Ahmed Baraka',
-            id: 3,
-            date: '30/12/2018',
-            applicationFees: 'Paid',
-            tuitionFees: 'Not Paid',
-        },
-        {
-            name: 'Mariam Ahmed Baraka',
-            id: 3,
-            date: '30/12/2018',
-            applicationFees: 'Paid',
-            tuitionFees: 'Not Paid',
-        },
-        {
-            name: 'Mariam Ahmed Baraka',
-            id: 3,
-            date: '30/12/2018',
-            applicationFees: 'Paid',
-            tuitionFees: 'Not Paid',
-        },
-    ];
-    constructor() { }
+    dataSource = [];
+    constructor(
+        private applicationService: ApplicationService,
+        private route: ActivatedRoute,
+        private datePipe: DatePipe
+    ) { }
 
     ngOnInit() {
+        this.getLevelApplicants();
+    }
+    getLevelApplicants() {
+        this.route.params.subscribe(
+            params => {
+                this.applicationService.getLevelApplicants(params.id).subscribe(
+                    (res: any) => {
+                        this.dataSource = res.map(applicant => {
+                            return {
+                                name: `${applicant.applicant.first_name} ${applicant.applicant.last_name}`,
+                                id: applicant.applicant.application_id,
+                                date: this.datePipe.transform(applicant.created_at, 'MMMM d, y'),
+                                applicationFees: applicant.application_fees? 'Paid' : 'Not Paid',
+                                tuitionFees: applicant.tuition_fees? 'Paid' : 'Not Paid',
+                            }
+                        })
+                    }
+                )
+            }
+        )
+
     }
 }
