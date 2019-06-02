@@ -1,0 +1,10 @@
+.single-status {
+    border-radius: 5px;
+    .status-actions {
+        opacity: 0;
+        transition: 0.3s;
+    }
+    &:hover .status-actions{
+        opacity: 1;
+    }
+}

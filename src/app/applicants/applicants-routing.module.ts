@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ApplicantsComponent } from './applicants.component';
 import { LevelApplicantsComponent } from './level-applicants/level-applicants.component';
+import { StatusesComponent } from './statuses/statuses.component';
 
 const routes: Routes = [
     {
@@ -9,6 +10,9 @@ const routes: Routes = [
     },
     {
         path: 'level/:id', component: LevelApplicantsComponent
+    },
+    {
+        path: 'statuses', component: StatusesComponent
     }
 ];
 

@@ -7,7 +7,7 @@ const routes: Routes = [
         path: 'students', loadChildren: './students/students.module#StudentsModule'
     },
     {
-        path: 'applicants', loadChildren: './applicants/applicants.module#ApplicantsModule', canActivate: [AuthenticationGuard]
+        path: 'applicants', loadChildren: './applicants/applicants.module#ApplicantsModule'
     },
     {
         path: 'login', loadChildren: './auth/auth.module#AuthModule'

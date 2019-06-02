@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="pt-8 mt-8"></div>
+    <div class="ptb-6 plr-6 content-shadow bg-white mb-6">
+        <h2 class="section-title mb-3 title-with-btn">
+            <div class="inline-block">
+                <i class="fa fa-caret-right mr-3"></i>
+                Statuses
+            </div>
+            <button class="s-btn btn-secondary">
+                + Add status
+            </button>
+        </h2>
+        <div class="ptb-6"></div>
+        <div class="row smaller-gaps">
+            <div class="col-md-4" *ngFor="let x of repeater.slice(0,3)">
+                <div
+                    class="single-status border-default ptb-3 plr-3 flex flex-space-between flex-middle bg-offwhite mb-3">
+                    <div class="size-small">
+                        Read only status
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" *ngFor="let x of repeater">
+                <div class="single-status border-default ptb-3 plr-3 flex flex-space-between flex-middle mb-3">
+                    <div class="size-small">
+                        Sample Status
+                    </div>
+                    <div class="status-actions">
+                        <i class="fa fa-pencil pointer text-primary mr-3"></i>
+                        <i class="fa fa-trash-o pointer text-error"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
