@@ -11,7 +11,6 @@ import { SkoleraEditComponent } from '@shared/skolera-edit/skolera-edit.componen
 })
 export class StatusesComponent implements OnInit {
 
-    repeater = [1, 2, 3, 4, 5, 6, 7, 8];
     statuses = [];
     statusInput = '';
     constructor(

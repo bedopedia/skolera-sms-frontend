@@ -22,7 +22,6 @@ export class StudentProfileComponent implements OnInit {
             params => {
                 this.applicationService.getStudent(params.id).subscribe(
                     (res: any) => {
-                        console.log(res)
                     }
                 )
             }
