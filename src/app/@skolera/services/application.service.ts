@@ -20,6 +20,9 @@ export class ApplicationService {
     getLevels() {
         return this.http.get(`${baseUrl}/api/v1/levels`);
     }
+    getLevelsReport() {
+        return this.http.get(`${baseUrl}/api/v1/applications/report`);
+    }
     getLevelApplicants(levelId) {
         return this.http.get(`${baseUrl}/api/v1/applications`, {
             params: {
