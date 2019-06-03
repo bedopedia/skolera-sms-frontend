@@ -11,6 +11,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AdmissionSuccessComponent } from './admission-success/admission-success.component';
 import { ApplicationService, StatusesService } from '@skolera/services';
 import { CoreModule } from '@core/core.module';
+import { EditApplicationComponent } from './edit-application/edit-application.component';
+import { ApplicationFormComponent } from './application-form/application-form.component';
 // import { NgxCaptchaModule } from 'ngx-captcha';
 
 @NgModule({
@@ -19,7 +21,9 @@ import { CoreModule } from '@core/core.module';
         StudentsComponent,
         StudentProfileComponent,
         GuardianFormComponent,
-        AdmissionSuccessComponent
+        AdmissionSuccessComponent,
+        EditApplicationComponent,
+        ApplicationFormComponent
     ],
     imports: [
         CommonModule,

@@ -10,38 +10,11 @@ import { DatePipe } from '@angular/common';
 })
 export class StudentProfileComponent implements OnInit {
 
-    application: any = {
-        applicant: {
-            application_id: null,
-            birth_city: '',
-            birth_country: '',
-            birth_date: '',
-            created_at: '',
-            email: '',
-            first_name: '',
-            guardians: [],
-            id: 2,
-            landline: '',
-            last_name: '',
-            mobile_number: '',
-            primary_address: '',
-            secondary_address: '',
-            updated_at: '',
-            username: null
-        },
-        application_fees: null,
-        created_at: '',
-        id: null,
-        level_id: null,
-        school_id: null,
-        status_id: null,
-        tuition_fees: null,
-        updated_at: ''
-    }
     applicationData = [];
     applicantName = '';
     statusName = '';
     guardians = [];
+    id = null;
     constructor(
         private route: ActivatedRoute,
         private applicationService: ApplicationService,
@@ -60,14 +33,15 @@ export class StudentProfileComponent implements OnInit {
                         this.applicantName = res.applicant.first_name + ' ' + res.applicant.last_name;
                         this.guardians = res.applicant.guardians;
                         this.getStatus(res.status_id);
+                        this.id = res.applicant.application_id;
                         this.applicationData = [
                             {
                                 key: 'Application Fees',
-                                value: res.applicant.application_fees ? 'Paid' : 'Not Paid'
+                                value: res.application_fees ? 'Paid' : 'Not Paid'
                             },
                             {
                                 key: 'Tuition Fees',
-                                value: res.applicant.tuition_fees ? 'Paid' : 'Not Paid'
+                                value: res.tuition_fees ? 'Paid' : 'Not Paid'
                             },
                             {
                                 key: 'Username',

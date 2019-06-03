@@ -5,6 +5,7 @@ import { StudentAdmissionComponent } from './student-admission/student-admission
 import { StudentProfileComponent } from './student-profile/student-profile.component';
 import { AdmissionSuccessComponent } from './admission-success/admission-success.component';
 import { AuthenticationGuard } from '@core/guards';
+import { EditApplicationComponent } from './edit-application/edit-application.component';
 
 const routes: Routes = [
     {
@@ -18,6 +19,9 @@ const routes: Routes = [
     },
     {
         path: 'profile/:id', component: StudentProfileComponent, canActivate: [AuthenticationGuard]
+    },
+    {
+        path: 'profile/edit/:id', component: EditApplicationComponent, canActivate: [AuthenticationGuard]
     },
     {
         path: '**', redirectTo: 'admission'
