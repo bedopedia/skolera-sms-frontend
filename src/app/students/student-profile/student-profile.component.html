@@ -1,115 +1,81 @@
 <div class="container">
     <div class="pt-8 mt-8"></div>
-    <div class="ptb-6 plr-6 content-shadow bg-white mb-6">
-        <h2 class="section-title mb-6 title-with-btn">
-            <div class="inline-block">
-                <i class="fa fa-caret-right mr-3"></i>
-                Student info
+    <div class="ptb-10 plr-6 content-shadow bg-white mb-6">
+        <div class="max-800 max-center">
+            <h2 class="section-title mb-6 title-with-btn">
+                <div class="inline-block">
+                    <i class="fa fa-caret-right mr-3"></i>
+                    Student info
+                </div>
+                <button class="s-btn btn-secondary">
+                    Edit profile
+                </button>
+            </h2>
+            <div class="student-info-box text-center">
+                <p class="section-title">
+                    {{applicantName}}
+                </p>
             </div>
-            <button class="s-btn btn-secondary">
-                Edit profile
-            </button>
-        </h2>
-        <div class="student-info-box flex flex-middle">
-            <img src="https://media.creativemornings.com/uploads/user/avatar/49419/Bechtel_Profile_Square.jpg" alt="">
-            <div class="ml-3">
-                <p class="component-title mt-3">Adham Ali</p>
-                <p class="text-line">Admn No. : NIS-0401</p>
-                <p class="text-line">Roll Number : 33</p>
-            </div>
+            <div class="mtb-6"></div>
+            <table class="table s-table table-hovered fixed-layout table-stripped">
+                <colgroup>
+                    <col width="200px">
+                    <col>
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <td class="border-bottom ptb-2 text-right">Applicant Status</td>
+                        <td class="border-bottom ptb-2 weight-bold">{{statusName}}</td>
+                    </tr>
+                    <tr *ngFor="let row of applicationData">
+                        <td class="border-bottom ptb-2 text-right">{{row.key}}</td>
+                        <td class="border-bottom ptb-2 weight-bold">{{row.value}}</td>
+                    </tr>
+                    <tr>
+                        <td class="border-bottom ptb-2 text-right">Guardians</td>
+                        <td class="border-bottom ptb-3 weight-bold plr-0">
+                            <div *ngFor="let guardian of guardians; let i = index" class="plr-3" [ngClass]="{'border-bottom': i != guardians.length - 1, 'mb-3': i != guardians.length - 1, 'pb-3': i != guardians.length - 1}">
+                                <div class="flex flex-middle">
+                                    <p class="max-150 width-100">Name: </p>
+                                    <p class="weight-bold">
+                                        {{guardian.name}}
+                                    </p>
+                                </div>
+                                <div class="flex flex-middle">
+                                    <p class="max-150 width-100">Relation: </p>
+                                    <p class="weight-bold">
+                                        {{guardian.relation}}
+                                    </p>
+                                </div>
+                                <div class="flex flex-middle">
+                                    <p class="max-150 width-100">E-mail: </p>
+                                    <p class="weight-bold">
+                                        {{guardian.email}}
+                                    </p>
+                                </div>
+                                <div class="flex flex-middle">
+                                    <p class="max-150 width-100">Phone Number: </p>
+                                    <p class="weight-bold">
+                                        {{guardian.phone_number}}
+                                    </p>
+                                </div>
+                                <div class="flex flex-middle">
+                                    <p class="max-150 width-100">Address 1: </p>
+                                    <p class="weight-bold">
+                                        {{guardian.primary_address}}
+                                    </p>
+                                </div>
+                                <div class="flex flex-middle">
+                                    <p class="max-150 width-100">Address 2: </p>
+                                    <p class="weight-bold">
+                                        {{guardian.secondary_address}}
+                                    </p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="mtb-6"></div>
-        <table class="table s-table max-center table-hovered fixed-layout table-stripped">
-            <colgroup>
-                <col width="150px">
-                <col>
-            </colgroup>
-            <tbody>
-                <tr>
-                    <td class="border-bottom ptb-2 text-right">Course</td>
-                    <td class="border-bottom ptb-2 weight-bold">MYP2 IB-MYP</td>
-                </tr>
-                <tr>
-                    <td class="border-bottom ptb-2 text-right">Batch</td>
-                    <td class="border-bottom ptb-2 weight-bold">17A</td>
-                </tr>
-                <tr>
-                    <td class="border-bottom ptb-2 text-right">Admission Date</td>
-                    <td class="border-bottom ptb-2 weight-bold">20 May 2019</td>
-                </tr>
-                <tr>
-                    <td class="border-bottom ptb-2 text-right">Date of Birth</td>
-                    <td class="border-bottom ptb-2 weight-bold">20 May 2014</td>
-                </tr>
-                <tr>
-                    <td class="border-bottom ptb-2 text-right">Blood group</td>
-                    <td class="border-bottom ptb-2 weight-bold">A+</td>
-                </tr>
-                <tr>
-                    <td class="border-bottom ptb-2 text-right">Gender</td>
-                    <td class="border-bottom ptb-2 weight-bold">Male</td>
-                </tr>
-                <tr>
-                    <td class="border-bottom ptb-2 text-right">Nationality</td>
-                    <td class="border-bottom ptb-2 weight-bold">Egypt (‫مصر‬‎)</td>
-                </tr>
-                <tr>
-                    <td class="border-bottom ptb-2 text-right">Mother Tongue</td>
-                    <td class="border-bottom ptb-2 weight-bold">Arabic</td>
-                </tr>
-                <tr>
-                    <td class="border-bottom ptb-2 text-right">Category</td>
-                    <td class="border-bottom ptb-2 weight-bold">DISC 10</td>
-                </tr>
-                <tr>
-                    <td class="border-bottom ptb-2 text-right">Religion</td>
-                    <td class="border-bottom ptb-2 weight-bold">Islam</td>
-                </tr>
-                <tr>
-                    <td class="border-bottom ptb-2 text-right">Address</td>
-                    <td class="border-bottom ptb-2 weight-bold">somewhere, someplace ltd, llc.</td>
-                </tr>
-                <tr>
-                    <td class="border-bottom ptb-2 text-right">City</td>
-                    <td class="border-bottom ptb-2 weight-bold">Cairo</td>
-                </tr>
-                <tr>
-                    <td class="border-bottom ptb-2 text-right">State</td>
-                    <td class="border-bottom ptb-2 weight-bold">Cairo</td>
-                </tr>
-                <tr>
-                    <td class="border-bottom ptb-2 text-right">PIN code</td>
-                    <td class="border-bottom ptb-2 weight-bold">11511</td>
-                </tr>
-                <tr>
-                    <td class="border-bottom ptb-2 text-right">Country</td>
-                    <td class="border-bottom ptb-2 weight-bold">Egypt (‫مصر‬‎)</td>
-                </tr>
-                <tr>
-                    <td class="border-bottom ptb-2 text-right">Birth Place</td>
-                    <td class="border-bottom ptb-2 weight-bold">Giza, Egypt</td>
-                </tr>
-                <tr>
-                    <td class="border-bottom ptb-2 text-right">Phone</td>
-                    <td class="border-bottom ptb-2 weight-bold">+2012345768</td>
-                </tr>
-                <tr>
-                    <td class="border-bottom ptb-2 text-right">Mobile</td>
-                    <td class="border-bottom ptb-2 weight-bold">+2012345768</td>
-                </tr>
-                <tr>
-                    <td class="border-bottom ptb-2 text-right">E-mail</td>
-                    <td class="border-bottom ptb-2 weight-bold">example@gmail.com</td>
-                </tr>
-                <tr>
-                    <td class="border-bottom ptb-2 text-right">E-mail Alerts</td>
-                    <td class="border-bottom ptb-2 weight-bold">Enabled</td>
-                </tr>
-                <tr>
-                    <td class="border-bottom ptb-2 text-right">Biometric ID</td>
-                    <td class="border-bottom ptb-2 weight-bold">3334</td>
-                </tr>
-            </tbody>
-        </table>
     </div>
 </div>

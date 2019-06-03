@@ -11,6 +11,9 @@ export class StatusesService {
     getStatuses() {
         return this.http.get(`${baseUrl}/api/v1/statuses`);
     }
+    getStatus(id) {
+        return this.http.get(`${baseUrl}/api/v1/statuses/${id}`);
+    }
     addStatus(status) {
         return this.http.post(`${baseUrl}/api/v1/statuses`, status);
     }
