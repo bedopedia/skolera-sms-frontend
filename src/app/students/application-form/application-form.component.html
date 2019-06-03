@@ -1,0 +1,287 @@
+<div class="container">
+    <div class="pt-8 mt-8"></div>
+    <div class="ptb-6 plr-6 content-shadow bg-white mb-6 pb-10">
+        <div class="stepper-container max-500 max-center flex flex-middle ptb-8">
+            <div class="stepper-point" [class.active]="currentStep >= 1">
+                1
+                <p class="stepper-title">
+                    General Info
+                </p>
+            </div>
+            <div class="stepper-line" [class.next]="currentStep >= 1" [class.active]="currentStep >= 2"></div>
+            <div class="stepper-point" [class.active]="currentStep >= 2">
+                2
+                <p class="stepper-title">
+                    Student Details
+                </p>
+            </div>
+            <div class="stepper-line" [class.next]="currentStep >= 2" [class.active]="currentStep >= 3"></div>
+            <div class="stepper-point" [class.active]="currentStep >= 3">
+                3
+                <p class="stepper-title">
+                    Student Guardians
+                </p>
+            </div>
+            <!-- <div class="stepper-line" [class.next]="currentStep >= 2" [class.active]="currentStep >= 3"></div>
+                <div class="stepper-point" [class.active]="currentStep >= 3">
+                    3
+                    <p class="stepper-title">
+                        Verify & Submit
+                    </p>
+                </div> -->
+        </div>
+        <div class="pt-8"></div>
+        <div class="step-1" [hidden]="currentStep != 1">
+            <div class="max-700 max-center">
+                <h2 class="section-title mb-6 border-bottom pb-1">
+                    <i class="fa fa-caret-right mr-3"></i>
+                    General Info
+                </h2>
+                <div class="form-group max-400 max-center pt-10">
+                    <label for="">Level <sup class="text-error">*</sup></label>
+                    <div class="input-with-icon bg-white">
+                        <ng-select class="s-control s-select" (open)="getLevels()" [clearable]="false"
+                            placeholder="Select a level" [items]="levels" bindLabel="name" bindValue="id"
+                            [markFirst]="true" required [(ngModel)]="selectedLevel" [loading]="true"
+                            [loadingText]="'Loading...'">
+                        </ng-select>
+                        <i class="fa fa-caret-down input-icon"></i>
+                    </div>
+                </div>
+                <div class="form-group max-400 max-center" *ngIf="application">
+                    <label for="">Status</label>
+                    <div class="input-with-icon bg-white">
+                        <ng-select class="s-control s-select" (open)="getStatuses()" [clearable]="false"
+                            placeholder="Select a status" [items]="statuses" bindLabel="name" bindValue="id"
+                            [markFirst]="true" [(ngModel)]="selectedStatus" [loading]="true"
+                            [loadingText]="'Loading...'">
+                        </ng-select>
+                        <i class="fa fa-caret-down input-icon"></i>
+                    </div>
+                </div>
+                <div class="form-group max-400 max-center" *ngIf="application">
+                    <label for="">Application Fees</label>
+                    <div class="input-with-icon bg-white">
+                        <ng-select class="s-control s-select" [clearable]="false" [items]="feesArray" bindLabel="name" bindValue="status"
+                            [markFirst]="true" [(ngModel)]="selectedApplicationFees">
+                        </ng-select>
+                        <i class="fa fa-caret-down input-icon"></i>
+                    </div>
+                </div>
+                <div class="form-group max-400 max-center" *ngIf="application">
+                    <label for="">Tuition Fees</label>
+                    <div class="input-with-icon bg-white">
+                        <ng-select class="s-control s-select" [clearable]="false" [items]="feesArray" bindLabel="name" bindValue="status"
+                            [markFirst]="true" [(ngModel)]="selectedTuitionFees">
+                        </ng-select>
+                        <i class="fa fa-caret-down input-icon"></i>
+                    </div>
+                </div>
+                <div class="ptb-5"></div>
+                <div class="alert-error mt-6" *ngIf="(!selectedLevel || selectedLevel == '') && levelError">
+                    Please select a level.
+                </div>
+                <div class="border-bottom mtb-6"></div>
+                <div class="btns-container flex flex-end">
+                    <button type="button" (click)="proceedToDetails()" class="s-btn btn-lg btn-primary max-200 btn-block">
+                        Save & proceed
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="step-2" [hidden]="currentStep != 2">
+            <div class="max-700 max-center">
+                <h2 class="section-title mb-6 border-bottom pb-1">
+                    <i class="fa fa-caret-right mr-3"></i>
+                    Student Details
+                </h2>
+                <form #applicationAttributesForm="ngForm" (ngSubmit)="OnApplicationAttributesSubmit()">
+                    <div class="row">
+                        <div class="col-md-12 mb-4">
+                            <div class="form-group inline-form-group mb-0"
+                                [class.has-error]="applicationAttributesForm.submitted && firstName.invalid">
+                                <label for="">First Name <sup class="text-error">*</sup></label>
+                                <input type="text" class="s-control" placeholder="Enter first name" name="first_name"
+                                    [(ngModel)]="applicant.firstName" #firstName="ngModel" required>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="form-group inline-form-group mb-0"
+                                [class.has-error]="applicationAttributesForm.submitted && lastName.invalid">
+                                <label for="">Last Name <sup class="text-error">*</sup></label>
+                                <input type="text" class="s-control" placeholder="Enter last name" name="last_name"
+                                    [(ngModel)]="applicant.lastName" #lastName="ngModel" required>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="form-group inline-form-group mb-0"
+                                [class.has-error]="applicationAttributesForm.submitted && dob.invalid">
+                                <label for="">Date of birth <sup class="text-error">*</sup></label>
+                                <div class="input-with-icon">
+                                    <input [max]="maxAllowedDate" placeholder="Pick a date..."
+                                        [matDatepicker]="dobPicker" class="s-control" name="birth_date" [(ngModel)]="applicant.birthDate"
+                                        #dob="ngModel" required>
+                                    <mat-datepicker #dobPicker></mat-datepicker>
+                                    <mat-datepicker-toggle class="input-icon date-picker" [for]="dobPicker">
+                                    </mat-datepicker-toggle>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="form-group inline-form-group mb-0"
+                                [class.has-error]="applicationAttributesForm.submitted && city.invalid">
+                                <label for="">City</label>
+                                <input type="text" class="s-control" placeholder="Enter city" name="birth_city" [(ngModel)]="applicant.birthCity"
+                                    #city="ngModel">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="form-group inline-form-group mb-0"
+                                [class.has-error]="applicationAttributesForm.submitted && country.invalid">
+                                <label for="">Country <sup class="text-error">*</sup></label>
+                                <div class="input-with-icon bg-white">
+                                    <ng-select class="s-control s-select" [clearable]="false"
+                                        placeholder="Select a country" [items]="countries" bindLabel="name"
+                                        bindValue="name" [markFirst]="true" name="birth_country" #country="ngModel"
+                                        required [(ngModel)]="applicant.birthCountry">
+                                    </ng-select>
+                                    <i class="fa fa-caret-down input-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="form-group inline-form-group mb-0"
+                                [class.has-error]="applicationAttributesForm.submitted && primaryAddress.invalid">
+                                <label for="">Address 1</label>
+                                <input type="text" class="s-control" placeholder="Enter address 1"
+                                    name="primary_address" [(ngModel)]="applicant.primaryAddress" #primaryAddress="ngModel">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="form-group inline-form-group mb-0"
+                                [class.has-error]="applicationAttributesForm.submitted && secondaryAddress.invalid">
+                                <label for="">Address 2</label>
+                                <input type="text" class="s-control" placeholder="Enter address 2"
+                                    name="secondary_address" [(ngModel)]="applicant.secondaryAddress" #secondaryAddress="ngModel">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="form-group inline-form-group mb-0"
+                                [class.has-error]="applicationAttributesForm.submitted && mobileNumber.invalid">
+                                <label for="">Mobile <sup class="text-error">*</sup></label>
+                                <input type="tel" class="s-control" placeholder="Enter mobile number"
+                                    name="mobile_number" [(ngModel)]="applicant.mobileNumber" #mobileNumber="ngModel" required>
+                            </div>
+                            <div class="min-100 mt-1 size-small text-right text-error"
+                                *ngIf="mobileNumber.errors?.pattern && applicationAttributesForm.submitted">
+                                Invalid mobile number
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="form-group inline-form-group mb-0"
+                                [class.has-error]="applicationAttributesForm.submitted && landline.invalid">
+                                <label for="">Landline</label>
+                                <input type="tel" class="s-control" placeholder="Enter landline" name="landline" [(ngModel)]="applicant.landline"
+                                    #landline="ngModel">
+                            </div>
+                            <div class="min-100 mt-1 size-small text-right text-error"
+                                *ngIf="landline.errors?.pattern && applicationAttributesForm.submitted">
+                                Invalid landline number
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="form-group inline-form-group mb-0"
+                                [class.has-error]="applicationAttributesForm.submitted && emailAddress.invalid">
+                                <label for="">E-mail <sup class="text-error">*</sup></label>
+                                <input type="email" [pattern]="emailPattern" class="s-control"
+                                    placeholder="End email address" name="email" [(ngModel)]="applicant.emailAddress" #emailAddress="ngModel"
+                                    required>
+                            </div>
+                            <div class="min-100 mt-1 size-small text-right text-error"
+                                *ngIf="emailAddress.errors?.pattern && applicationAttributesForm.submitted">
+                                Invalid email address
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert-error mt-6"
+                        *ngIf="applicationAttributesForm.invalid && applicationAttributesForm.submitted">
+                        Please make sure all required fields are filled correctly.
+                    </div>
+                    <div class="border-bottom mtb-6"></div>
+                    <div class="btns-container flex flex-space-between">
+                        <button type="button" (click)="currentStep = 1"
+                            class="s-btn btn-lg btn-secondary max-200 btn-block">
+                            Back
+                        </button>
+                        <button type="button" (click)="OnApplicationAttributesSubmit()" class="s-btn btn-lg btn-primary max-200 btn-block">
+                            Save & proceed
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="step-3" [hidden]="currentStep != 3">
+            <div class="max-700 max-center">
+                <h2 class="section-title mb-6 border-bottom pb-1">
+                    <i class="fa fa-caret-right mr-3"></i>
+                    Student Guardians
+                </h2>
+                <div class="content-shadow border-default ptb-4 plr-4 mb-6"
+                    *ngFor="let guardian of guardians; let i = index">
+                    <guardian-form [isSubmitted]="guardian.isSubmitted" [(form)]="guardian.form"></guardian-form>
+                    <div class="delete-btn text-right">
+                        <button class="s-btn btn-danger btn-sm" *ngIf="i > 1" (click)="deleteGuardian(i)">
+                            Remove guardian
+                        </button>
+                    </div>
+                </div>
+                <div class="add-btn">
+                    <button class="s-btn btn-secondary" (click)="addGuardianFormGroup()">
+                        + Add New Guardian
+                    </button>
+                </div>
+                <div class="alert-error mt-6" *ngIf="guardiansError">
+                    Please make sure all required fields are filled correctly.
+                </div>
+                <div class="border-bottom mtb-6"></div>
+                <div class="btns-container flex flex-space-between">
+                    <button type="button" (click)="currentStep = 2" [disabled]="isSubmitting"
+                        class="s-btn btn-lg btn-secondary max-200 btn-block">
+                        Back
+                    </button>
+                    <button [disabled]="isSubmitting" (click)="submitGuardians()"
+                        class="s-btn btn-lg btn-primary max-200 btn-block">
+                        <span *ngIf="!isSubmitting">Submit</span>
+                        <span class="fa fa-spinner loading-icon" *ngIf="isSubmitting"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="step-3" [hidden]="currentStep != 3">
+            <!-- <div class="max-700 max-center">
+                    <div class="flex flex-center mt-6">
+                        <form [formGroup]="captchaFormGroup">
+                            <ngx-recaptcha2 #captchaElem [siteKey]="'6LcsraUUAAAAAMIrR32Q5dv_XuRr_XCGtROmaxId'"
+                                (reset)="handleReset()" (ready)="captchaReady()" (load)="captchaLoad()"
+                                (success)="captchaSuccess($event)" (expire)="captchaExpire()" [useGlobalDomain]="false"
+                                [ngModel]="recaptcha" [theme]="'light'" [ngModelOptions]="{ standalone: true }">
+                            </ngx-recaptcha2>
+                        </form>
+                    </div>
+                    <div class="text-center size-small mt-4">
+                        <label for="">Please verify you're not a robot before submitting.</label>
+                    </div>
+                    <div class="border-bottom mtb-6"></div>
+                    <div class="btns-container flex flex-space-between">
+                        <button (click)="currentStep = 2" class="s-btn btn-lg btn-secondary max-200 btn-block">
+                            Back
+                        </button>
+                        <button (click)="submitStudent()" [disabled]="!captchaVerified"
+                            class="s-btn btn-lg btn-primary max-200 btn-block">
+                            Submit
+                        </button>
+                    </div>
+                </div> -->
+        </div>
+    </div>
+</div>

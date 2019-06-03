@@ -4,6 +4,8 @@ import { StudentsComponent } from './students.component';
 import { StudentAdmissionComponent } from './student-admission/student-admission.component';
 import { StudentProfileComponent } from './student-profile/student-profile.component';
 import { AdmissionSuccessComponent } from './admission-success/admission-success.component';
+import { AuthenticationGuard } from '@core/guards';
+import { EditApplicationComponent } from './edit-application/edit-application.component';
 
 const routes: Routes = [
     {
@@ -16,11 +18,14 @@ const routes: Routes = [
         path: 'admission-success', component: AdmissionSuccessComponent
     },
     {
-        path: '**', redirectTo: 'admission'
+        path: 'profile/:id', component: StudentProfileComponent, canActivate: [AuthenticationGuard]
     },
-    // {
-    //     path: 'profile/:id', component: StudentProfileComponent
-    // }
+    {
+        path: 'profile/edit/:id', component: EditApplicationComponent, canActivate: [AuthenticationGuard]
+    },
+    {
+        path: '**', redirectTo: 'admission'
+    }
 ];
 
 @NgModule({

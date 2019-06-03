@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { baseUrl } from 'src/environments/environment';
 
 @Injectable()
 export class ApplicationService {
@@ -8,9 +9,22 @@ export class ApplicationService {
         private http: HttpClient
     ) { }
     addStudent(student) {
-        return this.http.post(`https://cisregister.skolera.com/api/v1/applications`,student);
+        return this.http.post(`${baseUrl}/api/v1/applications`,student);
+    }
+    editStudent(id, student) {
+        return this.http.put(`${baseUrl}/api/v1/applications/${id}`,student);
+    }
+    getStudent(id) {
+        return this.http.get(`${baseUrl}/api/v1/applications/${id}`);
     }
     getLevels() {
-        return this.http.get(`https://cisregister.skolera.com/api/v1/levels`);
+        return this.http.get(`${baseUrl}/api/v1/levels`);
+    }
+    getLevelApplicants(levelId) {
+        return this.http.get(`${baseUrl}/api/v1/applications`, {
+            params: {
+                level_id: levelId
+            }
+        });
     }
 }
