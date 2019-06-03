@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApplicationService } from '@skolera/services';
+import { ApplicationService, StatusesService } from '@skolera/services';
 
 @Component({
     selector: 'app-applicants',
@@ -8,7 +8,7 @@ import { ApplicationService } from '@skolera/services';
 })
 export class ApplicantsComponent implements OnInit {
 
-    columns = [
+    columns = this.columns = [
         {
             columnDef: 'level', header: 'Level', cell: (element: any) => {
                 return {
@@ -18,42 +18,77 @@ export class ApplicantsComponent implements OnInit {
             },
             total: element => `Total`
         },
-        { columnDef: 'number', header: 'No. of Applicants', cell: (element: any) => element.number, total: element => this.getTotal(element) },
-        { columnDef: 'pending', header: 'Pending', cell: (element: any) => element.pending, total: element => this.getTotal(element) },
-        { columnDef: 'allotted', header: 'Allotted', cell: (element: any) => element.allotted, total: element => this.getTotal(element) },
-        { columnDef: 'discarded', header: 'Discarded', cell: (element: any) => element.discarded, total: element => this.getTotal(element) },
-        { columnDef: 'assessment', header: 'Assessment', cell: (element: any) => element.assessment, total: element => this.getTotal(element) },
-        { columnDef: 'accepted', header: 'Accepted', cell: (element: any) => element.accepted, total: element => this.getTotal(element) },
-        { columnDef: 'registed', header: 'Registed', cell: (element: any) => element.registed, total: element => this.getTotal(element) },
-        { columnDef: 'refund', header: 'Re-Fund', cell: (element: any) => element.refund, total: element => this.getTotal(element) },
-        { columnDef: 'next', header: 'Next Year', cell: (element: any) => element.next, total: element => this.getTotal(element) },
+        {
+            columnDef: 'number',
+            header: 'No. of Applicants',
+            cell: (element: any) => element.number,
+            total: element => this.getTotal(element)
+        }
     ];
     displayedColumns = null;
     dataSource = [];
+    statuses = [];
     constructor(
-        private applicationService: ApplicationService
+        private applicationService: ApplicationService,
+        private statusesService: StatusesService
     ) { }
 
     ngOnInit() {
+        this.getStatuses();
+    }
+    getStatuses() {
+        this.statusesService.getStatuses().subscribe(
+            (res: any) => {
+                this.statuses = res;
+                for (let i = 0; i < this.statuses.length; i++) {
+                    const status = this.statuses[i];
+                    this.columns.push(
+                        {
+                            columnDef: `${status.id}`,
+                            header: status.name,
+                            cell: (element: any) => element[status.id],
+                            total: element => this.getTotal(element)
+                        }
+                    )
+                }
+                this.getLevelsReport();
+            }
+        )
+    }
+    getLevelsReport() {
+        this.applicationService.getLevelsReport().subscribe(
+            (res: any) => {
+                this.getLevels(res);
+            }
+        )
+    }
+    getLevels(apiLevels) {
+        let levels = [];
         this.applicationService.getLevels().subscribe(
             (res: any) => {
-                for (let i = 0; i < res.length; i++) {
-                    const level = res[i];
-                    this.dataSource.push({
+                levels = res;
+                for (let i = 0; i < levels.length; i++) {
+                    const level = levels[i];
+                    let apiLevel = [];
+                    apiLevel = apiLevels.levels[0].filter(le => le.level_id == level.id)
+                    let row = {
                         level: {
                             label: level.name,
                             id: level.id
                         },
-                        number: 455,
-                        pending: 5,
-                        allotted: 44,
-                        discarded: 20,
-                        assessment: 3,
-                        accepted: 300,
-                        registed: 10,
-                        refund: 5,
-                        next: 45
-                    })
+                        number: apiLevel.length > 0 ? apiLevel[0].applicants_count : 0,
+                    }
+                    for (let j = 0; j < this.statuses.length; j++) {
+                        const status = this.statuses[j];
+                        let apiStatus = [];
+                        if (apiLevel.length > 0) {
+                            apiStatus = apiLevel[0].status[0].filter(st => st.status_id == status.id)
+                        } else {
+                            apiStatus = [];
+                        }
+                        row[status.id] = apiStatus.length > 0 ? apiStatus[0].applicants_count : 0
+                    }
+                    this.dataSource.push(row)
                     this.displayedColumns = this.columns.map(c => c.columnDef);
                 }
             }
