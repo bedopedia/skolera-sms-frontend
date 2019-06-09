@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ApplicationService, StatusesService } from '@skolera/services';
+import { ApplicationService, StatusesService, AgeService } from '@skolera/services';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -19,7 +19,8 @@ export class StudentProfileComponent implements OnInit {
         private route: ActivatedRoute,
         private applicationService: ApplicationService,
         private datePipe: DatePipe,
-        private statusesService: StatusesService
+        private statusesService: StatusesService,
+        private ageService: AgeService
     ) { }
 
     ngOnInit() {
@@ -57,7 +58,7 @@ export class StudentProfileComponent implements OnInit {
                             },
                             {
                                 key: 'Age On October 1st',
-                                value: this.calculateAge(new Date(res.applicant.birth_date)) + ' Years'
+                                value: this.ageService.calculateAge(new Date(res.applicant.birth_date)) + ' Years'
                             },
                             {
                                 key: 'Country Of Birth',
@@ -92,14 +93,6 @@ export class StudentProfileComponent implements OnInit {
                 )
             }
         )
-    }
-    calculateAge(dob) {
-        let dateOnOctober: any = new Date();
-        dateOnOctober.setDate(1);
-        dateOnOctober.setMonth(9);
-        let difference = dateOnOctober - dob;
-        let ageDate = new Date(difference);
-        return Math.abs(ageDate.getUTCFullYear() - 1970);
     }
     getStatus(id) {
         this.statusesService.getStatus(id).subscribe(
