@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, NgForm } from '@angular/forms';
-import { ApplicationService, StatusesService } from '@skolera/services';
+import { ApplicationService, StatusesService, AgeService } from '@skolera/services';
 import { COUNTRIES } from '@skolera/resources';
 
 @Component({
@@ -17,6 +17,7 @@ export class ApplicationFormComponent implements OnInit {
     @ViewChild('applicationAttributesForm') applicationAttributesForm: NgForm;
     guardians = [];
     emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    phonePattern =  /^[+]?(\d{4,16})$/;
     protected captchaFormGroup: FormGroup;
     captchaVerified = false;
     recaptcha;
@@ -52,10 +53,13 @@ export class ApplicationFormComponent implements OnInit {
         landline: '',
         emailAddress: ''
     }
+    showAge = false;
+    studentAge = null;
     constructor(
         private formBuilder: FormBuilder,
         private applicationService: ApplicationService,
-        private statusesService: StatusesService
+        private statusesService: StatusesService,
+        private ageService: AgeService
     ) { }
     ngOnInit() {
         if (this.application) {
@@ -98,6 +102,12 @@ export class ApplicationFormComponent implements OnInit {
     changeStep(step) {
         this.currentStep = step;
     }
+    showStudentAge(date) {
+        if(date != '' && date != null) {
+            this.studentAge = this.ageService.calculateAge(date);
+            this.showAge = true;
+        }
+    }
     proceedToDetails() {
         if (!this.selectedLevel || this.selectedLevel == '') {
             this.levelError = true;
@@ -139,8 +149,8 @@ export class ApplicationFormComponent implements OnInit {
             'relation': ['Father', [Validators.required]],
             'primary_address': ['', []],
             'secondary_address': ['', []],
-            'mobile_number': ['', [Validators.required]],
-            'email': ['', [Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/), Validators.required]]
+            'mobile_number': ['', [Validators.required, Validators.pattern(this.phonePattern)]],
+            'email': ['', [Validators.pattern(this.emailPattern), Validators.required]]
         })
     }
     createStudent() {
@@ -180,6 +190,7 @@ export class ApplicationFormComponent implements OnInit {
             landline: this.application.applicant.landline,
             emailAddress: this.application.applicant.email
         }
+        this.showStudentAge(new Date(this.applicant.birthDate));
         this.guardians = [];
         for (let i = 0; i < this.application.applicant.guardians.length; i++) {
             const guardian = this.application.applicant.guardians[i];
@@ -189,8 +200,8 @@ export class ApplicationFormComponent implements OnInit {
                     'relation': [guardian.relation, [Validators.required]],
                     'primary_address': [guardian.primary_address, []],
                     'secondary_address': [guardian.secondary_address, []],
-                    'mobile_number': [guardian.mobile_number, [Validators.required]],
-                    'email': [guardian.email, [Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/), Validators.required]]
+                    'mobile_number': [guardian.mobile_number, [Validators.required, Validators.pattern(this.phonePattern)]],
+                    'email': [guardian.email, [Validators.pattern(this.emailPattern), Validators.required]]
                 }),
                 isSubmitted: false
             })

@@ -1,14 +1,14 @@
 <div class="bg-white content-shadow ptb-4 app-header-sticky">
     <div class="container">
         <div class="row">
-            <div class="col flex-middle flex">
+            <div class="col-md-6 col-12 flex-middle mobile-mb flex mobile-center">
                 <img height="25px" src="assets/images/skolera-logo-long.svg" alt="">
             </div>
-            <div class="col text-right flex flex-middle flex-end">
-                <a routerLink="/students/admission" class="s-btn btn-link btn-sm text-primary">
-                    Student Admission
-                </a>
+            <div class="col-md-6 col-12 text-right mobile-center flex flex-middle flex-end">
                 <div class="auth" *ngIf="globals.currentUser">
+                    <a routerLink="/students/admission" class="s-btn btn-link btn-sm text-primary">
+                        Student Admission
+                    </a>
                     <a routerLink="/applicants" class="s-btn btn-link btn-sm">Applicants</a>
                     <button (click)="logout()" class="s-btn btn-link btn-sm pointer">
                         <span class="text-error">Logout</span>

@@ -1,38 +1,80 @@
-<div class="container">
+<div class="container container-max">
     <div class="pt-8 mt-8"></div>
     <div class="ptb-6 plr-6 content-shadow bg-white mb-6">
         <h2 class="section-title mb-3 title-with-btn">
-            <div class="inline-block">
+            <div class="inline-block mobile-mb">
                 <i class="fa fa-caret-right mr-3"></i>
                 Applicants
             </div>
-            <a routerLink="statuses" class="s-btn btn-secondary">
-                + Add Status
-            </a>
+            <div class="inline-flex">
+                <a routerLink="statuses" class="s-btn btn-primary">
+                    + Add Status
+                </a>
+                <button class="s-btn pointer btn-secondary ml-2" (click)="printTable()">
+                    <i class="fa fa-print"></i> Print Table
+                </button>
+            </div>
         </h2>
         <p class="size-small max-600 mb-10">
-            Create and manage applications for new joinees of courses in your organisation. You can activate applicant
-            registration for each course with customized forms and fields based on your requirements.
+            Manage on-line applications
         </p>
-        <table mat-table #table [dataSource]="dataSource" class="table s-table table-striped">
-            <ng-container *ngFor="let column of columns" [cdkColumnDef]="column.columnDef">
-                <mat-header-cell *cdkHeaderCellDef>
-                    <div class="size-small weight-bold">
-                        {{ column.header }}
-                    </div>
-                </mat-header-cell>
-                <mat-cell *cdkCellDef="let row">
-                    <div class="size-small">
-                        <a class="hover-link" routerLink="{{'level/' + column.cell(row).id}}"
-                            *ngIf="column.cell(row).hasOwnProperty('label')">{{column.cell(row).label}}</a>
-                        <span *ngIf="!column.cell(row).hasOwnProperty('label')">{{column.cell(row)}}</span>
-                    </div>
-                </mat-cell>
-                <mat-footer-cell *matFooterCellDef>{{column.total(column.columnDef)}}</mat-footer-cell>
-            </ng-container>
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-            <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
-        </table>
+        <div class="btn-group size-lead weight-bold scroll-btns flex-end" [hidden]="isLoading">
+            <button class="s-btn btn-secondary btn-sm btn-with-icon" (click)="scrollPrevNext(-1)">
+                <div class="fa fa-caret-left"></div>
+            </button>
+            <button class="s-btn btn-secondary btn-sm btn-with-icon" (click)="scrollPrevNext(1)">
+                <div class="fa fa-caret-right"></div>
+            </button>
+        </div>
+        <div class="loading-container text-center size-lead ptb-8 text-primary" *ngIf="isLoading">
+            <i class="fa fa-spinner loading-icon"></i>
+        </div>
+        <div class="applicants-table-head-container" #tableHead [hidden]="isLoading">
+            <div class="applicants-table-head-wrapper">
+                <table mat-table [dataSource]="dataSource" class="mb-0 table applicants-table s-table table-striped">
+                    <ng-container *ngFor="let column of columns" [cdkColumnDef]="column.columnDef">
+                        <mat-header-cell *cdkHeaderCellDef>
+                            <div class="size-tiny uppercase weight-bold weight-bold">
+                                {{ column.header }}
+                            </div>
+                        </mat-header-cell>
+                        <mat-cell *cdkCellDef="let row">
+                            <div class="size-small">
+                                <a class="underlined text-primary" routerLink="{{'level/' + column.cell(row).id}}"
+                                    *ngIf="column.cell(row).hasOwnProperty('label')">{{column.cell(row).label}}</a>
+                                <span *ngIf="!column.cell(row).hasOwnProperty('label')">{{column.cell(row)}}</span>
+                            </div>
+                        </mat-cell>
+                        <mat-footer-cell *matFooterCellDef>{{column.total(column.columnDef)}}</mat-footer-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                </table>
+            </div>
+        </div>
+        <div class="applicants-table-container" [hidden]="isLoading">
+            <div class="applicants-table-wrapper" #tableBody>
+                <table mat-table [dataSource]="dataSource"
+                    class="table applicants-table s-table table-striped">
+                    <ng-container *ngFor="let column of columns" [cdkColumnDef]="column.columnDef">
+                        <mat-header-cell *cdkHeaderCellDef>
+                            <div class="size-tiny uppercase weight-bold weight-bold">
+                                {{ column.header }}
+                            </div>
+                        </mat-header-cell>
+                        <mat-cell *cdkCellDef="let row">
+                            <div class="size-small">
+                                <a class="underlined hover-link text-primary" routerLink="{{'level/' + column.cell(row).id}}"
+                                    *ngIf="column.cell(row).hasOwnProperty('label')">{{column.cell(row).label}}</a>
+                                <span *ngIf="!column.cell(row).hasOwnProperty('label')">{{column.cell(row)}}</span>
+                            </div>
+                        </mat-cell>
+                        <mat-footer-cell *matFooterCellDef>{{column.total(column.columnDef)}}</mat-footer-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="displayedColumns" [hidden]="true"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                    <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
