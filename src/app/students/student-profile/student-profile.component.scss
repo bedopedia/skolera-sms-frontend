@@ -10,3 +10,10 @@
         padding: 5px;
     }
 }
+
+.profile-table-container {
+    overflow: auto;
+    .s-table {
+        min-width: 500px;
+    }
+}
