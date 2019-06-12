@@ -37,14 +37,13 @@ export class ApplicantsComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.getStatuses();
+        this.getLevelsReport();
     }
-    getStatuses() {
-        this.statusesService.getStatuses().subscribe(
+    getLevelsReport() {
+        this.applicationService.getLevelsReport().subscribe(
             (res: any) => {
-                this.statuses = res;
-                for (let i = 0; i < this.statuses.length; i++) {
-                    const status = this.statuses[i];
+                for (let i = 0; i < res.applicants_total_count.per_statuses.length; i++) {
+                    const status = res.applicants_total_count.per_statuses[i];
                     this.columns.push(
                         {
                             columnDef: `${status.id}`,
@@ -54,42 +53,21 @@ export class ApplicantsComponent implements OnInit {
                         }
                     )
                 }
-                this.getLevelsReport();
-            }
-        )
-    }
-    getLevelsReport() {
-        this.applicationService.getLevelsReport().subscribe(
-            (res: any) => {
-                this.getLevels(res);
-            }
-        )
-    }
-    getLevels(apiLevels) {
-        let levels = [];
-        this.applicationService.getLevels().subscribe(
-            (res: any) => {
-                levels = res;
+                let levels = res.levels;
                 for (let i = 0; i < levels.length; i++) {
                     const level = levels[i];
-                    let apiLevel: any = [];
-                    apiLevel = apiLevels.levels.filter(le => le.level_id == level.id)
                     let row = {
                         level: {
                             label: level.name,
                             id: level.id
                         },
-                        number: apiLevel.length > 0 ? apiLevel.applicants_count : 0,
+                        number: level.applicants_count,
                     }
-                    for (let j = 0; j < this.statuses.length; j++) {
-                        const status = this.statuses[j];
+                    for (let j = 0; j < res.applicants_total_count.per_statuses.length; j++) {
+                        const status = res.applicants_total_count.per_statuses[j];
                         let apiStatus: any = [];
-                        if (apiLevel.length > 0) {
-                            apiStatus = apiLevel.status.filter(st => st.status_id == status.id)
-                        } else {
-                            apiStatus = [];
-                        }
-                        row[status.id] = apiStatus.length > 0 ? apiStatus.applicants_count : 0
+                        apiStatus = res.applicants_total_count.per_statuses.filter(st => st.status_id == status.id)
+                        row[status.id] = apiStatus.length > 0 ? apiStatus[0].applicants_count : 0
                     }
                     this.dataSource.push(row)
                     this.displayedColumns = this.columns.map(c => c.columnDef);
@@ -104,10 +82,10 @@ export class ApplicantsComponent implements OnInit {
     getTotal(element) {
         return this.dataSource.map(t => t[element]).reduce((acc, value) => acc + value, 0);
     }
-    scrollPrevNext(sign){
+    scrollPrevNext(sign) {
         this.tableBody.nativeElement.scrollLeft += sign * 100;
         this.tableHead.nativeElement.scrollLeft += sign * 100;
-    } 
+    }
     printTable() {
         let tableElement = this.tableBody.nativeElement;
         let table = document.createElement('table');
