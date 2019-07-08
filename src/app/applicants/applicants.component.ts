@@ -66,8 +66,10 @@ export class ApplicantsComponent implements OnInit {
                     for (let j = 0; j < res.applicants_total_count.per_statuses.length; j++) {
                         const status = res.applicants_total_count.per_statuses[j];
                         let apiStatus: any = [];
-                        apiStatus = res.applicants_total_count.per_statuses.filter(st => st.status_id == status.id)
-                        row[status.id] = apiStatus.length > 0 ? apiStatus[0].applicants_count : 0
+                        apiStatus = res.applicants_total_count.per_statuses.filter(object => object.id == status.id)
+                        let statusIds = level.statuses.map(status => status.id)
+                        row[status.id] = apiStatus.length > 0 && level.applicants_count > 0 && statusIds.includes(status.id)
+                            ? apiStatus[0].applicants_count : 0
                     }
                     this.dataSource.push(row)
                     this.displayedColumns = this.columns.map(c => c.columnDef);
