@@ -41,10 +41,9 @@
                     <label for="">Level <sup class="text-error">*</sup></label>
                     <div class="input-with-icon bg-white">
                         <ng-select class="s-control s-select" (open)="getLevels()" [clearable]="false"
-                            placeholder="Select a level" [items]="levels" bindLabel="name" bindValue="id"
-                            [markFirst]="true" required [(ngModel)]="selectedLevel" [loading]="true"
-                            [loadingText]="'Loading...'">
-                        </ng-select>
+                           placeholder="Select a level" [items]="levels" bindLabel="name" bindValue="id"
+                           [markFirst]="true" required [(ngModel)]="selectedLevel">
+                       </ng-select>
                         <i class="fa fa-caret-down input-icon"></i>
                     </div>
                 </div>
