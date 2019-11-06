@@ -21,7 +21,10 @@
         "paths": {
             "@skolera/*": ["./src/app/@skolera/*"],
             "@core/*": ["./src/app/core/*"],
-            "@shared/*": ["./src/app/shared/*"]
+            "@shared/*": ["./src/app/shared/*"],
+            "exceljs": [
+                "node_modules/exceljs/dist/exceljs.min.js"
+                ]
         },
     }
 }

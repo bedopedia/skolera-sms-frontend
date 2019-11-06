@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ApplicationService, StatusesService } from '@skolera/services';
+import { ExcelService } from '@skolera/services/export.service';
 
 @Component({
     selector: 'app-applicants',
@@ -28,12 +29,14 @@ export class ApplicantsComponent implements OnInit {
     displayedColumns = null;
     dataSource = [];
     statuses = [];
+    tableData:any;
     isLoading = true;
     @ViewChild('tableHead') tableHead: ElementRef
     @ViewChild('tableBody') tableBody: ElementRef
     constructor(
         private applicationService: ApplicationService,
-        private statusesService: StatusesService
+        private statusesService: StatusesService,
+        private excelService: ExcelService
     ) { }
 
     ngOnInit() {
@@ -54,6 +57,9 @@ export class ApplicantsComponent implements OnInit {
                     )
                 }
                 let levels = res.levels;
+                console.log("res",res);
+                this.tableData = res;
+                
                 for (let i = 0; i < levels.length; i++) {
                     const level = levels[i];
                     let row = {
@@ -72,7 +78,10 @@ export class ApplicantsComponent implements OnInit {
                     }
                     this.dataSource.push(row)
                     this.displayedColumns = this.columns.map(c => c.columnDef);
+                    
                 }
+                console.log("displayedColumns",this.dataSource);
+                
                 this.showTable();
             }
         )
@@ -86,6 +95,71 @@ export class ApplicantsComponent implements OnInit {
     scrollPrevNext(sign) {
         this.tableBody.nativeElement.scrollLeft += sign * 100;
         this.tableHead.nativeElement.scrollLeft += sign * 100;
+    }
+    exportExcel(){
+        console.log("this.colums", this.tableData);
+        
+        let excellDta = {
+            title: " Applicants",
+            header: [],
+            fileName:"ApplicantsEXCELL",
+            data: []
+        }
+
+         excellDta.header[0]= ['LEVEL']
+         excellDta.header[0].push ('NO. OF APPLICANTS')
+
+         this.tableData.applicants_total_count.per_statuses.forEach(status => {
+            excellDta.header[0].push(status.name)
+         });
+        //  for (let index = 0; index <  this.tableData.applicants_total_count.per_statuses.length; index++) {
+        //     this.tableData.applicants_total_count.per_statuses
+        //     excellDta.header[0].push(status.name)
+        //  }
+         for (let index = 0; index <  this.tableData.levels.length; index++) {
+             console.log(index,this.tableData.levels[index].name);
+             excellDta.data[index] = [this.tableData.levels[index].name]
+             
+            // excellDta.data[index].push(this.tableData.levels[index].name)
+             
+         }
+
+
+
+
+        //  for (let i = 0; i < this.categories.length; i++) {
+        //     if(this.categories[i].sub_categories.length == 0){
+        //         for (let j = 0; j < this.categories[i].items.length; j++) {
+        //             excellDta.header[0].push(this.categories[i].name)
+        //             excellDta.header[1].push(this.categories[i].items[j].item_type + "(Max grade:"+this.categories[i].items[j].max_grade + ")" )
+        //             excellDta.header[2].push('')
+        //         }
+        //     }
+        //     else{
+        //         for (let k = 0; k < this.categories[i].sub_categories.length; k++) {
+        //             excellDta.header[0].push(this.categories[i].name)
+
+        //             for (let index = 0; index < this.categories[i].sub_categories[k].items.length; index++) {
+        //                 excellDta.header[1].push(this.categories[i].sub_categories[k].name )
+        //                 excellDta.header[2].push(this.categories[i].sub_categories[k].items[index].item_type + "(Max grade:"+this.categories[i].sub_categories[k].items[index].max_grade + ")" )
+        //             }
+        //         }
+        //         for (let index2 = 0; index2 < this.categories[i].items.length; index2++) {
+        //             excellDta.header[2].push(this.categories[i].items[index2].item_type + "(Max grade:"+this.categories[i].items[index2].max_grade + ")" )
+        //         }
+        //     }
+
+        //  }
+
+        // for (let i = 0; i < this.students.length; i++) {
+        //     excellDta.data[i]= [this.students[i].name]
+        //     for (let j = 0; j < this.students[i].submissions.length; j++) {
+        //      excellDta.data[i].push(this.students[i].submissions[j].grade)
+        //     }
+        //  }
+
+        this.excelService.generateExcel(excellDta);
+
     }
     printTable() {
         let tableElement = this.tableBody.nativeElement;
