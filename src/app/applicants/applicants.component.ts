@@ -55,8 +55,10 @@ export class ApplicantsComponent implements OnInit {
                             total: element => this.getTotal(element)
                         }
                     )
+             
                 }
                 let levels = res.levels;
+    
                 console.log("res",res);
                 this.tableData = res;
                 
@@ -76,12 +78,12 @@ export class ApplicantsComponent implements OnInit {
                         let statusIds = level.statuses.map(status => status.id)
                         row[status.id] = statusIds.includes(status.id) ? apiStatus[0].applicants_count : 0
                     }
+ 
                     this.dataSource.push(row)
                     this.displayedColumns = this.columns.map(c => c.columnDef);
                     
                 }
-                console.log("displayedColumns",this.dataSource);
-                
+
                 this.showTable();
             }
         )
@@ -96,71 +98,59 @@ export class ApplicantsComponent implements OnInit {
         this.tableBody.nativeElement.scrollLeft += sign * 100;
         this.tableHead.nativeElement.scrollLeft += sign * 100;
     }
-    exportExcel(){
-        console.log("this.colums", this.tableData);
-        
-        let excellDta = {
-            title: " Applicants",
-            header: [],
-            fileName:"ApplicantsEXCELL",
-            data: []
+    exportExcel(table, EmployeeList){
+
+        // let excellDta = {
+        //     title: " Applicants",
+        //     header: [],
+        //     fileName:"ApplicantsEXCELL",
+        //     data: []
+        // }
+
+        //  excellDta.header[0]= ['LEVEL']
+        //  excellDta.header[0].push ('NO. OF APPLICANTS')
+
+        //  this.tableData.applicants_total_count.per_statuses.forEach(status => {
+        //     excellDta.header[0].push(status.name);
+      
+        //  });
+
+        //  for (let index = 0; index < this.tableData.applicants_total_count.per_statuses.length; index++) {
+        //     excellDta.header[0].push(this.tableData.applicants_total_count.per_statuses[index].name);
+
+        //     for (let i = 0; i < this.tableData.levels[index].statuses.length; i++) {
+        //         console.log(this.tableData.levels[index].statuses[i]);
+                    
+        //         if(this.tableData.levels[index].statuses[i].id == this.tableData.applicants_total_count.per_statuses[index].id){
+             
+        //             excellDta.data[index+3] = this.tableData.levels[index].statuses[i].applicants_count
+        //         }
+        //         else
+        //         excellDta.data[index+3] = 0
+                
+        //     }
+        //  }
+
+        //  for (let index = 0; index <  this.tableData.levels.length; index++) {
+        //      console.log(index,this.tableData.levels[index].name);
+        //      excellDta.data[index] = [this.tableData.levels[index].name]
+        //      excellDta.data[index].push(this.tableData.levels[index].applicants_count)  
+        //  }
+
+
+        // this.excelService.generateExcel(excellDta);
+
+        let uri = 'data:application/vnd.ms-excel;base64,'
+        , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
+        , base64 = function(s) { return window.btoa(decodeURIComponent(encodeURIComponent(s))) }
+        , format = function(s,c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+        if (!table.nodeType) table = document.getElementById(table)
+        var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+        window.location.href = uri + base64(format(template, ctx))
         }
+       
 
-         excellDta.header[0]= ['LEVEL']
-         excellDta.header[0].push ('NO. OF APPLICANTS')
-
-         this.tableData.applicants_total_count.per_statuses.forEach(status => {
-            excellDta.header[0].push(status.name)
-         });
-        //  for (let index = 0; index <  this.tableData.applicants_total_count.per_statuses.length; index++) {
-        //     this.tableData.applicants_total_count.per_statuses
-        //     excellDta.header[0].push(status.name)
-        //  }
-         for (let index = 0; index <  this.tableData.levels.length; index++) {
-             console.log(index,this.tableData.levels[index].name);
-             excellDta.data[index] = [this.tableData.levels[index].name]
-             
-            // excellDta.data[index].push(this.tableData.levels[index].name)
-             
-         }
-
-
-
-
-        //  for (let i = 0; i < this.categories.length; i++) {
-        //     if(this.categories[i].sub_categories.length == 0){
-        //         for (let j = 0; j < this.categories[i].items.length; j++) {
-        //             excellDta.header[0].push(this.categories[i].name)
-        //             excellDta.header[1].push(this.categories[i].items[j].item_type + "(Max grade:"+this.categories[i].items[j].max_grade + ")" )
-        //             excellDta.header[2].push('')
-        //         }
-        //     }
-        //     else{
-        //         for (let k = 0; k < this.categories[i].sub_categories.length; k++) {
-        //             excellDta.header[0].push(this.categories[i].name)
-
-        //             for (let index = 0; index < this.categories[i].sub_categories[k].items.length; index++) {
-        //                 excellDta.header[1].push(this.categories[i].sub_categories[k].name )
-        //                 excellDta.header[2].push(this.categories[i].sub_categories[k].items[index].item_type + "(Max grade:"+this.categories[i].sub_categories[k].items[index].max_grade + ")" )
-        //             }
-        //         }
-        //         for (let index2 = 0; index2 < this.categories[i].items.length; index2++) {
-        //             excellDta.header[2].push(this.categories[i].items[index2].item_type + "(Max grade:"+this.categories[i].items[index2].max_grade + ")" )
-        //         }
-        //     }
-
-        //  }
-
-        // for (let i = 0; i < this.students.length; i++) {
-        //     excellDta.data[i]= [this.students[i].name]
-        //     for (let j = 0; j < this.students[i].submissions.length; j++) {
-        //      excellDta.data[i].push(this.students[i].submissions[j].grade)
-        //     }
-        //  }
-
-        this.excelService.generateExcel(excellDta);
-
-    }
+    
     printTable() {
         let tableElement = this.tableBody.nativeElement;
         let table = document.createElement('table');

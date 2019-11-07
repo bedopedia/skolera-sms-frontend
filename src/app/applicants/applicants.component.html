@@ -13,7 +13,7 @@
                 <button class="s-btn pointer btn-secondary ml-2" (click)="printTable()">
                     <i class="fa fa-export"></i> Print Table
                 </button>
-                <button class="s-btn pointer btn-secondary ml-2" (click)="exportExcel()">
+                <button class="s-btn pointer btn-secondary ml-2" (click)="exportExcel(tableHead)">
                    Export
                 </button>
             </div>
@@ -68,7 +68,7 @@
                             <div class="size-small">
                                 <a class="underlined hover-link text-primary" routerLink="{{'level/' + column.cell(row).id}}"
                                     *ngIf="column.cell(row).hasOwnProperty('label')">{{column.cell(row).label}}</a>
-                                <span *ngIf="!column.cell(row).hasOwnProperty('label')">{{column.cell(row)}}</span>
+                                <span *ngIf="!column.cell(row).hasOwnProperty('label')"> {{column.cell(row)}}</span>
                             </div>
                         </mat-cell>
                         <mat-footer-cell *matFooterCellDef>{{column.total(column.columnDef)}}</mat-footer-cell>
