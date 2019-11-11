@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ApplicationService, StatusesService } from '@skolera/services';
 import { ExcelService } from '@skolera/services/export.service';
+import { RouteReuseStrategy } from '@angular/router';
 
 @Component({
     selector: 'app-applicants',
@@ -29,7 +30,7 @@ export class ApplicantsComponent implements OnInit {
     displayedColumns = null;
     dataSource = [];
     statuses = [];
-    tableData:any;
+    tableData: any;
     isLoading = true;
     @ViewChild('tableHead') tableHead: ElementRef
     @ViewChild('tableBody') tableBody: ElementRef
@@ -55,13 +56,10 @@ export class ApplicantsComponent implements OnInit {
                             total: element => this.getTotal(element)
                         }
                     )
-             
+
                 }
                 let levels = res.levels;
-    
-                console.log("res",res);
                 this.tableData = res;
-                
                 for (let i = 0; i < levels.length; i++) {
                     const level = levels[i];
                     let row = {
@@ -78,12 +76,14 @@ export class ApplicantsComponent implements OnInit {
                         let statusIds = level.statuses.map(status => status.id)
                         row[status.id] = statusIds.includes(status.id) ? apiStatus[0].applicants_count : 0
                     }
- 
+
                     this.dataSource.push(row)
                     this.displayedColumns = this.columns.map(c => c.columnDef);
-                    
-                }
 
+
+
+
+                }
                 this.showTable();
             }
         )
@@ -98,59 +98,56 @@ export class ApplicantsComponent implements OnInit {
         this.tableBody.nativeElement.scrollLeft += sign * 100;
         this.tableHead.nativeElement.scrollLeft += sign * 100;
     }
-    exportExcel(table, EmployeeList){
+    exportExcel() {
 
-        // let excellDta = {
-        //     title: " Applicants",
-        //     header: [],
-        //     fileName:"ApplicantsEXCELL",
-        //     data: []
-        // }
-
-        //  excellDta.header[0]= ['LEVEL']
-        //  excellDta.header[0].push ('NO. OF APPLICANTS')
-
-        //  this.tableData.applicants_total_count.per_statuses.forEach(status => {
-        //     excellDta.header[0].push(status.name);
-      
-        //  });
-
-        //  for (let index = 0; index < this.tableData.applicants_total_count.per_statuses.length; index++) {
-        //     excellDta.header[0].push(this.tableData.applicants_total_count.per_statuses[index].name);
-
-        //     for (let i = 0; i < this.tableData.levels[index].statuses.length; i++) {
-        //         console.log(this.tableData.levels[index].statuses[i]);
-                    
-        //         if(this.tableData.levels[index].statuses[i].id == this.tableData.applicants_total_count.per_statuses[index].id){
-             
-        //             excellDta.data[index+3] = this.tableData.levels[index].statuses[i].applicants_count
-        //         }
-        //         else
-        //         excellDta.data[index+3] = 0
-                
-        //     }
-        //  }
-
-        //  for (let index = 0; index <  this.tableData.levels.length; index++) {
-        //      console.log(index,this.tableData.levels[index].name);
-        //      excellDta.data[index] = [this.tableData.levels[index].name]
-        //      excellDta.data[index].push(this.tableData.levels[index].applicants_count)  
-        //  }
-
-
-        // this.excelService.generateExcel(excellDta);
-
-        let uri = 'data:application/vnd.ms-excel;base64,'
-        , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
-        , base64 = function(s) { return window.btoa(decodeURIComponent(encodeURIComponent(s))) }
-        , format = function(s,c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
-        if (!table.nodeType) table = document.getElementById(table)
-        var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
-        window.location.href = uri + base64(format(template, ctx))
+        let excellDta = {
+            title: " Applicants",
+            header: [],
+            fileName: "ApplicantsEXCELL",
+            data: []
         }
-       
 
-    
+        const columns = {};
+        const rows = [];
+        excellDta.header[0] = ['LEVEL', 'NO. OF APPLICANTS'];
+        rows[this.tableData.levels.length] = []
+
+        this.tableData.applicants_total_count.per_statuses.forEach((element, index) => {
+            excellDta.header[0].push(element.name)
+            columns[element.id] = index + 2;
+
+        });
+
+        this.tableData.levels.forEach(level => {
+            const arr = new Array(this.tableData.applicants_total_count.per_statuses.length + 2).fill(0);
+            arr[0] = level.name;
+            arr[1] = level.applicants_count;
+            rows.push(arr)
+        });
+
+        for (let index = 0; index < this.tableData.levels.length; index++) {
+            const level = this.tableData.levels[index];
+            for (let i = 0; i < level.statuses.length; i++) {
+                const status = level.statuses[i];
+                const colIndex = columns[status.id];
+                rows[index][colIndex] = status.applicants_count;
+            }
+
+        }
+
+        this.columns.forEach(column => {
+            rows[this.tableData.levels.length].push(column.total(column.columnDef))
+
+        });
+
+        excellDta.data = rows
+        this.excelService.generateExcel(excellDta);
+
+
+    }
+
+
+
     printTable() {
         let tableElement = this.tableBody.nativeElement;
         let table = document.createElement('table');
