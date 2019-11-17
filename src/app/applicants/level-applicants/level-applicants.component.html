@@ -6,6 +6,10 @@
                 <i class="fa fa-caret-right mr-3"></i>
                 Applicant Registration
             </div>
+            <button class="s-btn pointer btn-secondary ml-2" (click)="exportExcel()">
+                    <img src="assets/images/export-icon.svg" class="mr-2" alt="">
+                Export
+             </button>
         </h2>
         <div class="level-applicants-table-container">
             <table mat-table #table [dataSource]="dataSource" class="table s-table table-striped">

@@ -8,6 +8,7 @@ import { LevelApplicantsComponent } from './level-applicants/level-applicants.co
 import { StatusesComponent } from './statuses/statuses.component';
 import { StatusesService, ApplicationService } from '@skolera/services';
 import { CoreModule } from '@core/core.module';
+import { ExcelService } from '@skolera/services/export.service';
 
 @NgModule({
   declarations: [ApplicantsComponent, LevelApplicantsComponent, StatusesComponent],
@@ -20,7 +21,8 @@ import { CoreModule } from '@core/core.module';
   providers: [
       StatusesService,
       ApplicationService,
-      DatePipe
+      DatePipe,
+      ExcelService
   ]
 })
 export class ApplicantsModule { }
