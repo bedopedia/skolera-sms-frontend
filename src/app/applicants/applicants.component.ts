@@ -110,19 +110,18 @@ export class ApplicantsComponent implements OnInit {
         const columns = {};
         const rows = [];
         excellDta.header[0] = ['LEVEL', 'NO. OF APPLICANTS'];
-        rows[this.tableData.levels.length] = []
+        rows[this.tableData.levels.length] = []        
 
         this.tableData.applicants_total_count.per_statuses.forEach((element, index) => {
             excellDta.header[0].push(element.name)
             columns[element.id] = index + 2;
-
         });
 
-        this.tableData.levels.forEach(level => {
+        this.tableData.levels.forEach((level, index) => {
             const arr = new Array(this.tableData.applicants_total_count.per_statuses.length + 2).fill(0);
             arr[0] = level.name;
             arr[1] = level.applicants_count;
-            rows.push(arr)
+            rows[index] = arr;
         });
 
         for (let index = 0; index < this.tableData.levels.length; index++) {
@@ -137,7 +136,6 @@ export class ApplicantsComponent implements OnInit {
 
         this.columns.forEach(column => {
             rows[this.tableData.levels.length].push(column.total(column.columnDef))
-
         });
 
         excellDta.data = rows
